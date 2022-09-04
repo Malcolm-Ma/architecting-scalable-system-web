@@ -1,4 +1,4 @@
-'use strict';
+
 
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'production';
@@ -27,8 +27,8 @@ const printHostingInstructions = require('react-dev-utils/printHostingInstructio
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
 
-const measureFileSizesBeforeBuild =
-  FileSizeReporter.measureFileSizesBeforeBuild;
+const measureFileSizesBeforeBuild
+  = FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 const useYarn = fs.existsSync(paths.yarnLockFile);
 
@@ -73,14 +73,14 @@ checkBrowsers(paths.appPath, isInteractive)
         console.log(chalk.yellow('Compiled with warnings.\n'));
         console.log(warnings.join('\n\n'));
         console.log(
-          '\nSearch for the ' +
-            chalk.underline(chalk.yellow('keywords')) +
-            ' to learn more about each warning.'
+          '\nSearch for the '
+          + chalk.underline(chalk.yellow('keywords'))
+          + ' to learn more about each warning.'
         );
         console.log(
-          'To ignore, add ' +
-            chalk.cyan('// eslint-disable-next-line') +
-            ' to the line before.\n'
+          'To ignore, add '
+          + chalk.cyan('// eslint-disable-next-line')
+          + ' to the line before.\n'
         );
       } else {
         console.log(chalk.green('Compiled successfully.\n'));
@@ -148,9 +148,9 @@ function build(previousFileSizes) {
 
         // Add additional information for postcss errors
         if (Object.prototype.hasOwnProperty.call(err, 'postcssNode')) {
-          errMessage +=
-            '\nCompileError: Begins at CSS selector ' +
-            err['postcssNode'].selector;
+          errMessage
+            += '\nCompileError: Begins at CSS selector '
+            + err['postcssNode'].selector;
         }
 
         messages = formatWebpackMessages({
@@ -171,10 +171,10 @@ function build(previousFileSizes) {
         return reject(new Error(messages.errors.join('\n\n')));
       }
       if (
-        process.env.CI &&
-        (typeof process.env.CI !== 'string' ||
-          process.env.CI.toLowerCase() !== 'false') &&
-        messages.warnings.length
+        process.env.CI
+        && (typeof process.env.CI !== 'string'
+          || process.env.CI.toLowerCase() !== 'false')
+        && messages.warnings.length
       ) {
         // Ignore sourcemap warnings in CI builds. See #8227 for more info.
         const filteredWarnings = messages.warnings.filter(
@@ -183,8 +183,8 @@ function build(previousFileSizes) {
         if (filteredWarnings.length) {
           console.log(
             chalk.yellow(
-              '\nTreating warnings as errors because process.env.CI = true.\n' +
-                'Most CI servers set it automatically.\n'
+              '\nTreating warnings as errors because process.env.CI = true.\n'
+              + 'Most CI servers set it automatically.\n'
             )
           );
           return reject(new Error(filteredWarnings.join('\n\n')));
