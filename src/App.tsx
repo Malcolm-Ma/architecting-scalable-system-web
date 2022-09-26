@@ -10,7 +10,7 @@ class App extends Component<any, any> {
   }
 
   render() {
-    console.log(KeycloakService.getToken());
+    // console.log(KeycloakService.getToken());
     return (
       <div className="App">
         <header className="App-header">

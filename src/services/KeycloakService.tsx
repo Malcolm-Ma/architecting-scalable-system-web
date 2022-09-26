@@ -11,6 +11,7 @@ const initKeycloak = (onAuthenticatedCallback: any) => {
         onAuthenticatedCallback();
       }
       else {
+        onAuthenticatedCallback();
         console.warn('not authenticated !!!');
       }
     })
@@ -24,7 +25,7 @@ const getToken = () => _kc.token;
 
 const isLoggedIn = () => !!_kc.token;
 
-const updateToken = (successCallback: any) => 
+const updateToken = (successCallback: any) =>
   _kc.updateToken(5)
     .then(successCallback)
     .catch(doLogin);
@@ -36,7 +37,7 @@ const hasRole = (roles: string[]) => roles.some((role: string) => _kc.hasRealmRo
 const getKcInstance = () => _kc;
 
 const KeycloakService = {
-  initKeycloak, 
+  initKeycloak,
   doLogin,
   doLogout,
   getToken,

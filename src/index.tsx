@@ -9,11 +9,11 @@ import KeycloakService from './services/KeycloakService';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// root.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// );
 const renderApp = () => {
   root.render(
     <React.StrictMode>
