@@ -6,10 +6,12 @@
 import Keycloak from "keycloak-js";
 import keyCloakConfig from "../config/keycloak";
 
-export default () => {
+type InitKeycloak = (onSuccess: any, onRejected: (any | undefined), onError: (any | undefined)) => void
+
+export default function useAuthService() {
   const _kc = new Keycloak(keyCloakConfig);
 
-  const initKeycloak = (onAuthenticatedCallback: any) => {
+  const initKeycloak: InitKeycloak = (onAuthenticatedCallback: any) => {
     _kc.init({
       onLoad: 'check-sso'
     })
