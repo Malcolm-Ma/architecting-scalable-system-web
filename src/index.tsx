@@ -1,14 +1,19 @@
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import React from "react";
 import { Provider } from 'react-redux';
+import {BrowserRouter} from "react-router-dom";
+
 import Layout from "src/layout";
 import store from 'src/reducer';
+
+import './index.css';
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <Layout />
+      <BrowserRouter>
+        <Layout />
+      </BrowserRouter>
     </Provider>
   );
 }

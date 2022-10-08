@@ -2,7 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "*" : ["./node_modules/@types/*", "*"]
+      "src/*": ["./src/*"],
+      "root/*": ["./*"]
     },
     "outDir": ".",
     "target": "es5",
@@ -42,7 +43,8 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
+    "src/**/*.js"
   ],
   "exclude": [
     "node_modules",

@@ -7,6 +7,7 @@ import React, {useEffect} from "react";
 import Header from "./header";
 import Main from "./Main";
 import useAuthService from "../hooks/useAuthService";
+import ELearnThemeProvider from "../theme";
 
 const Layout: React.FC = () => {
   const authService = useAuthService();
@@ -16,10 +17,12 @@ const Layout: React.FC = () => {
   }, [authService]);
 
   return (
-    <div>
-      <Header />
-      <Main />
-    </div>
+    <ELearnThemeProvider>
+      <div className="elearn-frame">
+        <Header />
+        <Main />
+      </div>
+    </ELearnThemeProvider>
   );
 };
 
