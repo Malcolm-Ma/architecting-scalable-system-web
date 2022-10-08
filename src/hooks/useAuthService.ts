@@ -6,7 +6,7 @@
 import Keycloak from "keycloak-js";
 import keyCloakConfig from "../config/keycloak";
 
-type InitKeycloak = (onSuccess: any, onRejected: (any | undefined), onError: (any | undefined)) => void
+type InitKeycloak = (onSuccess: any, onRejected?: (any | undefined), onError?: (any | undefined)) => void
 
 export default function useAuthService() {
   const _kc = new Keycloak(keyCloakConfig);
