@@ -1,19 +1,23 @@
 import Keycloak from "keycloak-js";
+import keyCloakConfig from "../config/keycloak";
 
-const _kc = new Keycloak('/resources/keycloak.json');
+const _kc = new Keycloak(keyCloakConfig);
 
 const initKeycloak = (onAuthenticatedCallback: any) => {
   _kc.init({
     onLoad: 'check-sso'
   })
     .then((authenticated: boolean) => {
-      if(authenticated) {
+      if (authenticated) {
         onAuthenticatedCallback();
-      }
-      else {
+      } else {
         onAuthenticatedCallback();
         console.warn('not authenticated !!!');
       }
+    })
+    .catch((reason: any) => {
+      onAuthenticatedCallback();
+      console.error(reason);
     })
 };
 

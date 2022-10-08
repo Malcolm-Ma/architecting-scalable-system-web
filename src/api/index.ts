@@ -4,6 +4,7 @@
  */
 
 import axios, {AxiosInstance, AxiosRequestConfig} from "axios";
+import KeycloakService from "../services/KeycloakService";
 
 const SERVICE_BASE_URL = '';
 
@@ -13,7 +14,16 @@ export class Request {
   public constructor() {
     this.axiosInstance = axios.create({
       baseURL: SERVICE_BASE_URL,
-    })
+    });
+    this.axiosInstance.interceptors.request.use((config) => {
+      if(KeycloakService.isLoggedIn()) {
+        const callback = () => {
+          config.headers!.Authorization = `Bearer ${KeycloakService.getToken()}`;
+          return Promise.resolve(config);
+        };
+        return KeycloakService.updateToken(callback);
+      }
+    });
   }
 
   public get(url: string, data: any, options: AxiosRequestConfig<any> | undefined) {

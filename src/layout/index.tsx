@@ -3,11 +3,23 @@
  * @author Mingze Ma
  */
 
-import React from "react";
+import React, {useEffect} from "react";
+import Header from "./header";
+import Main from "./Main";
+import useAuthService from "../hooks/useAuthService";
 
 const Layout: React.FC = () => {
+  const authService = useAuthService();
+
+  useEffect(() => {
+    authService.initKeycloak(() => {});
+  }, [authService]);
+
   return (
-    <div></div>
+    <div>
+      <Header />
+      <Main />
+    </div>
   );
 };
 
