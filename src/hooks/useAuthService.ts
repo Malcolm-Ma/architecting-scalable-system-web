@@ -6,25 +6,29 @@
 import Keycloak from "keycloak-js";
 import keyCloakConfig from "../config/keycloak";
 
-type InitKeycloak = (onSuccess: any, onRejected?: (any | undefined), onError?: (any | undefined)) => void
+interface InitKeycloakProps {
+  onSuccess: any,
+  onRejected?: (any | undefined),
+  onError?: (any | undefined),
+}
 
 export default function useAuthService() {
   const _kc = new Keycloak(keyCloakConfig);
 
-  const initKeycloak: InitKeycloak = (onAuthenticatedCallback: any) => {
+  const initKeycloak = ({onSuccess, onRejected, onError}: InitKeycloakProps) => {
     _kc.init({
       onLoad: 'check-sso'
     })
       .then((authenticated: boolean) => {
         if (authenticated) {
-          onAuthenticatedCallback();
+          onSuccess();
         } else {
-          onAuthenticatedCallback();
+          onRejected?.();
           console.warn('not authenticated !!!');
         }
       })
       .catch((reason: any) => {
-        onAuthenticatedCallback();
+        onError?.();
         console.error(reason);
       })
   };
