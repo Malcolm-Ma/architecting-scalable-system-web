@@ -8,6 +8,7 @@ import Header from "./header";
 import Main from "./Main";
 import useAuthService from "../hooks/useAuthService";
 import ELearnThemeProvider from "../theme";
+import {Box} from "@mui/material";
 
 const Layout: React.FC = () => {
   const authService = useAuthService();
@@ -18,10 +19,10 @@ const Layout: React.FC = () => {
 
   return (
     <ELearnThemeProvider>
-      <div className="elearn-frame">
+      <Box className="elearn-frame" sx={{ display: 'flex', width: '100%' }}>
         <Header />
         <Main />
-      </div>
+      </Box>
     </ELearnThemeProvider>
   );
 };
