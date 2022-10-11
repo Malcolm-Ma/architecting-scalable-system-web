@@ -1,40 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
-import { Component } from 'react';
-import KeycloakService from './services/KeycloakService';
+/**
+ * @file App
+ * @author Mingze Ma
+ */
 
-class App extends Component<any, any> {
+import React, {useEffect} from "react";
+import Layout from "src/layout";
+import useAuthService from "./hooks/useAuthService";
+import ELearnThemeProvider from "./theme";
+import {setLoginStatus, setToken} from "src/reducer/globalReducer";
+import {useDispatch} from "react-redux";
 
-  constructor(props: any) {
-    super(props);
-  }
+const App: React.FC = () => {
+  const authService = useAuthService();
 
-  render() {
-    // console.log(KeycloakService.getToken());
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {KeycloakService.isLoggedIn()
-            ? <button className="btn btn-lg btn-warning" onClick={() => KeycloakService.doLogout()}>Logout</button>
-            : <button className="btn btn-lg btn-warning" onClick={() => KeycloakService.doLogin()}>Login</button>
-          }
-        </header>
-      </div>
-    );
-  }
+  const dispatch = useDispatch();
 
-}
+  useEffect(() => {
+    authService.initKeycloak({
+      onSuccess(token) {
+        dispatch(setLoginStatus(true));
+        dispatch(setToken(token));
+      },
+      onRejected() {
+        dispatch(setLoginStatus(false));
+      },
+      onError() {
+        dispatch(setLoginStatus(false));
+      }
+    });
+  }, [authService, dispatch]);
+
+  return (
+    <ELearnThemeProvider>
+      <Layout />
+    </ELearnThemeProvider>
+  );
+};
 
 export default App;
