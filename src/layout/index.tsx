@@ -1,5 +1,5 @@
 /**
- * @file
+ * @file index
  * @author Mingze Ma
  */
 
@@ -9,7 +9,7 @@ import Main from "./Main";
 import useAuthService from "../hooks/useAuthService";
 import ELearnThemeProvider from "../theme";
 import {Box} from "@mui/material";
-import {setLoginStatus} from "src/reducer/globalReducer";
+import {setLoginStatus, setToken} from "src/reducer/globalReducer";
 import {useDispatch} from "react-redux";
 
 const Layout: React.FC = () => {
@@ -19,8 +19,9 @@ const Layout: React.FC = () => {
 
   useEffect(() => {
     authService.initKeycloak({
-      onSuccess() {
+      onSuccess(token) {
         dispatch(setLoginStatus(true));
+        dispatch(setToken(token));
       },
       onRejected() {
         dispatch(setLoginStatus(false));

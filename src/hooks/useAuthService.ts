@@ -4,12 +4,12 @@
  */
 
 import Keycloak from "keycloak-js";
-import keyCloakConfig from "../config/keycloak";
+import keyCloakConfig from "src/config/keycloak";
 
 interface InitKeycloakProps {
-  onSuccess: any,
-  onRejected?: (any | undefined),
-  onError?: (any | undefined),
+  onSuccess: (token: string | undefined) => void,
+  onRejected?: () => void | undefined,
+  onError?: () => void | undefined,
 }
 
 export default function useAuthService() {
@@ -21,7 +21,7 @@ export default function useAuthService() {
     })
       .then((authenticated: boolean) => {
         if (authenticated) {
-          onSuccess();
+          onSuccess(getToken());
         } else {
           onRejected?.();
           console.warn('not authenticated !!!');
