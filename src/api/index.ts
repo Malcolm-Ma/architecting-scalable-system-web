@@ -34,7 +34,7 @@ export class Request {
     });
   }
 
-  public post(url: string, data: any, options: AxiosRequestConfig<any> | undefined) {
+  public post(url: string, data: any, options?: AxiosRequestConfig<any> | undefined) {
     return this.axiosInstance(url, {
       method: 'post',
       data,

@@ -11,7 +11,7 @@ const AdminDashboard = React.lazy(() => import('src/module/adminDashboard'));
 
 const adminRoutes: RouteObject[] = [
   {
-    path: '/dashboard',
+    path: 'dashboard',
     element: suspenseLazyComponent(AdminDashboard),
   }
 ];

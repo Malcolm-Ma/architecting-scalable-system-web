@@ -4,5 +4,7 @@
  */
 
 export default {
-
+  commodity: {
+    search: '/commodity/search'
+  },
 };

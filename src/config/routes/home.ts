@@ -11,11 +11,11 @@ const Home = React.lazy(() => import('src/module/home'));
 
 const homeRoutes: RouteObject[] = [
   {
-    path: '/',
+    path: '',
     element: suspenseLazyComponent(Home),
   },
   {
-    path: '/home',
+    path: 'home',
     element: suspenseLazyComponent(Home),
   }
 ];
