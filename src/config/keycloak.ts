@@ -9,13 +9,7 @@ import Keycloak from 'keycloak-js';
 const keycloakConfig: KeycloakConfig = {
   realm: 'demo',
   url: 'https://authsvc-acs.com/',
-  clientId: 'DEMO_CLIENT',
-  // 'ssl-required': 'external',
-  // resource: 'DEMO_CLIENT',
-  // 'public-client': true,
-  // 'verify-token-audience': true,
-  // 'use-resource-role-mappings': true,
-  // 'confidential-port': 0
+  clientId: 'DEMO_CLIENT'
 };
 
 const keycloak = new Keycloak(keycloakConfig);
