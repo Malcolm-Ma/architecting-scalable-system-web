@@ -8,11 +8,6 @@ import keycloak from "src/config/keycloak";
 
 const SERVICE_BASE_URL = 'http://localhost:8090';
 
-const updateToken = (callback: any) =>
-  keycloak.updateToken(5)
-    .then(callback)
-    .catch(keycloak.login);
-
 export class Request {
   private readonly axiosInstance: AxiosInstance;
 
@@ -22,10 +17,10 @@ export class Request {
     });
     this.axiosInstance.interceptors.request.use((config) => {
       const callback = () => {
-        config.headers!.Authorization = (keycloak.token ? `Bearer ${keycloak.token}` : "");
+        config.headers!.Authorization = (keycloak.authenticated ? `Bearer ${keycloak.token}` : "");
         return Promise.resolve(config);
-      };
-      return updateToken(callback);
+      }
+      return callback;
     });
   }
 
