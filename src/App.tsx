@@ -35,11 +35,16 @@ const App: React.FC = () => {
   //     }
   //   });
   // }, [authService, dispatch]);
+  const onKeycloakEvent = (event: any, error: any) => {
+    console.log(typeof(event));
+    console.log('onKeycloakEvent', event, error)
+  }
 
   return (
     <ReactKeycloakProvider
       authClient={keycloak}
-      initOptions={keycloakProviderInitConfig}>
+      initOptions={keycloakProviderInitConfig}
+      onEvent={onKeycloakEvent}>
       <ELearnThemeProvider>
         <Layout />
       </ELearnThemeProvider>
