@@ -21,13 +21,11 @@ export class Request {
       baseURL: SERVICE_BASE_URL,
     });
     this.axiosInstance.interceptors.request.use((config) => {
-      if (keycloak.authenticated) {
-        const callback = () => {
-          config.headers!.Authorization = (keycloak.token ? `Bearer ${keycloak.token}` : "");
-          return Promise.resolve(config);
-        };
-        return updateToken(callback);
-      }
+      const callback = () => {
+        config.headers!.Authorization = (keycloak.token ? `Bearer ${keycloak.token}` : "");
+        return Promise.resolve(config);
+      };
+      return updateToken(callback);
     });
   }
 
