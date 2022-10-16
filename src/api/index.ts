@@ -6,7 +6,7 @@
 import axios, {AxiosInstance, AxiosRequestConfig} from "axios";
 import keycloak from "src/config/keycloak";
 
-const SERVICE_BASE_URL = '';
+const SERVICE_BASE_URL = 'http://localhost:8090';
 
 export class Request {
   private readonly axiosInstance: AxiosInstance;
