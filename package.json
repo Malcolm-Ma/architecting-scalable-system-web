@@ -21,6 +21,7 @@
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.8",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+    "@react-keycloak/core": "^3.2.0",
     "@react-keycloak/web": "^3.4.0",
     "@reduxjs/toolkit": "^1.8.5",
     "@svgr/webpack": "^5.5.0",

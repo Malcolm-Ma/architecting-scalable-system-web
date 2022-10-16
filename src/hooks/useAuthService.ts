@@ -3,8 +3,7 @@
  * @author Mingze Ma
  */
 
-import Keycloak from "keycloak-js";
-import keyCloakConfig from "src/config/keycloak";
+import keycloak from "src/config/keycloak";
 
 interface InitKeycloakProps {
   onSuccess: (token: string | undefined) => void,
@@ -13,11 +12,12 @@ interface InitKeycloakProps {
 }
 
 export default function useAuthService() {
-  const _kc = new Keycloak(keyCloakConfig);
+  const _kc = keycloak;
 
   const initKeycloak = ({onSuccess, onRejected, onError}: InitKeycloakProps) => {
     _kc.init({
-      onLoad: 'check-sso'
+      onLoad: 'check-sso',
+      adapter: 'default'
     })
       .then((authenticated: boolean) => {
         if (authenticated) {

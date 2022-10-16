@@ -4,8 +4,9 @@
  */
 
 import {KeycloakConfig} from "keycloak-js";
+import Keycloak from 'keycloak-js';
 
-const keyCloakConfig: KeycloakConfig = {
+const keycloakConfig: KeycloakConfig = {
   realm: 'demo',
   url: 'https://authsvc-acs.com/',
   clientId: 'DEMO_CLIENT',
@@ -17,4 +18,6 @@ const keyCloakConfig: KeycloakConfig = {
   // 'confidential-port': 0
 };
 
-export default keyCloakConfig;
+const keycloak = new Keycloak(keycloakConfig);
+
+export default keycloak;

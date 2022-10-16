@@ -7,4 +7,10 @@ export default {
   commodity: {
     search: '/commodity/search'
   },
+  user: {
+    create: ''
+  },
+  cart: {
+    create: ''
+  }
 };
