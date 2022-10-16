@@ -3,37 +3,32 @@
  * @author Mingze Ma
  */
 
-import React, {useEffect} from "react";
+import React from "react";
 import Layout from "src/layout";
-import useAuthService from "./hooks/useAuthService";
 import ELearnThemeProvider from "./theme";
-import {setLoginStatus, setToken} from "src/reducer/globalReducer";
-import {useDispatch} from "react-redux";
+import { ReactKeycloakProvider } from '@react-keycloak/web';
+import keycloak from 'src/config/keycloak';
+
+const keycloakProviderInitConfig = {
+  onLoad: "check-sso"
+};
 
 const App: React.FC = () => {
-  const authService = useAuthService();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    authService.initKeycloak({
-      onSuccess(token) {
-        dispatch(setLoginStatus(true));
-        dispatch(setToken(token));
-      },
-      onRejected() {
-        dispatch(setLoginStatus(false));
-      },
-      onError() {
-        dispatch(setLoginStatus(false));
-      }
-    });
-  }, [authService, dispatch]);
+  const onKeycloakEvent = (event: any, error: any) => {
+    console.log(typeof(event));
+    console.log('onKeycloakEvent', event, error)
+  }
 
   return (
-    <ELearnThemeProvider>
-      <Layout />
-    </ELearnThemeProvider>
+    <ReactKeycloakProvider
+      authClient={keycloak}
+      initOptions={keycloakProviderInitConfig}
+      onEvent={onKeycloakEvent}>
+      <ELearnThemeProvider>
+        <Layout />
+      </ELearnThemeProvider>
+    </ReactKeycloakProvider>
+    
   );
 };
 

@@ -17,11 +17,14 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useKeycloak } from '@react-keycloak/web'
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const ResponsiveAppBar = () => {
+
+  const { keycloak } = useKeycloak();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -39,6 +42,8 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  console.log(keycloak.tokenParsed?.preferred_username);
 
   return (
     <AppBar>
@@ -128,6 +133,17 @@ const ResponsiveAppBar = () => {
                 {page}
               </Button>
             ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            {keycloak.authenticated
+              ? <button className="btn btn-lg btn-warning" onClick={() => keycloak.logout()}>
+                Logout
+              </button>
+              : <button className="btn btn-lg btn-warning" onClick={() => keycloak.login()}>
+                Login
+              </button>
+            }
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

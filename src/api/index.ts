@@ -4,9 +4,14 @@
  */
 
 import axios, {AxiosInstance, AxiosRequestConfig} from "axios";
-import KeycloakService from "../services/KeycloakService";
+import keycloak from "src/config/keycloak";
 
 const SERVICE_BASE_URL = '';
+
+const updateToken = (callback: any) =>
+  keycloak.updateToken(5)
+  .then(callback)
+  .catch(keycloak.login);
 
 export class Request {
   private readonly axiosInstance: AxiosInstance;
@@ -16,12 +21,12 @@ export class Request {
       baseURL: SERVICE_BASE_URL,
     });
     this.axiosInstance.interceptors.request.use((config) => {
-      if(KeycloakService.isLoggedIn()) {
+      if(keycloak.authenticated) {
         const callback = () => {
-          config.headers!.Authorization = `Bearer ${KeycloakService.getToken()}`;
+          config.headers!.Authorization = (keycloak.token ? `Bearer ${keycloak.token}` : "");
           return Promise.resolve(config);
         };
-        return KeycloakService.updateToken(callback);
+        return updateToken(callback);
       }
     });
   }
