@@ -43,7 +43,7 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
-  console.log(keycloak.tokenParsed?.preferred_username);
+  console.log("Access Token: " + keycloak.token);
 
   return (
     <AppBar>

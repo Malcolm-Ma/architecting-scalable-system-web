@@ -15,8 +15,7 @@ const keycloakProviderInitConfig = {
 
 const App: React.FC = () => {
   const onKeycloakEvent = (event: any, error: any) => {
-    console.log(typeof(event));
-    console.log('onKeycloakEvent', event, error)
+    console.log("KcEventName: " + event, "Error: " + error);
   }
 
   return (
