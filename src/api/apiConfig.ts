@@ -3,9 +3,9 @@
  * @author Mingze Ma
  */
 
-export default {
+const apiConfig = {
   commodity: {
-    search: '/commodity/search'
+    search: '/commodity/search_commodity'
   },
   user: {
     create: ''
@@ -14,3 +14,5 @@ export default {
     create: ''
   }
 };
+
+export default apiConfig;

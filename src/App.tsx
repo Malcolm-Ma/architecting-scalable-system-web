@@ -6,7 +6,7 @@
 import React from "react";
 import Layout from "src/layout";
 import ELearnThemeProvider from "./theme";
-import { ReactKeycloakProvider } from '@react-keycloak/web';
+import {ReactKeycloakProvider} from '@react-keycloak/web';
 import keycloak from 'src/config/keycloak';
 
 const keycloakProviderInitConfig = {
@@ -31,10 +31,10 @@ const App: React.FC = () => {
       initOptions={keycloakProviderInitConfig}
       onEvent={onKeycloakEvent}>
       <ELearnThemeProvider>
-        <Layout />
+        <Layout/>
       </ELearnThemeProvider>
     </ReactKeycloakProvider>
-    
+
   );
 };
 
