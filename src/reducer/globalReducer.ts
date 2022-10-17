@@ -6,6 +6,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  init: false,
   loggedIn: false,
   token: '',
   userinfo: {},
@@ -15,6 +16,9 @@ const userSlice = createSlice({
   name: 'global',
   initialState,
   reducers: {
+    setInit(state, action) {
+      state.init = action.payload.init;
+    },
     setLoginStatus(state, action) {
       state.loggedIn = action.payload.status;
     },
@@ -25,6 +29,10 @@ const userSlice = createSlice({
   },
 });
 
-export const {setLoginStatus, setToken} = userSlice.actions;
+export const {
+  setLoginStatus,
+  setToken,
+  setInit,
+} = userSlice.actions;
 
 export default userSlice.reducer;
