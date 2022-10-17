@@ -12,8 +12,8 @@ const Home: React.FC = () => {
 
   const getCommodityList = useCallback(async () => {
     try {
-      const res = await actions.searchCommodity({
-        keyword: '',
+      const res = await actions.recommendCommodity({
+        limit: 10,
       });
       setResult(res);
       console.log('--res--\n', res);
