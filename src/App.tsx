@@ -12,10 +12,17 @@ import keycloak from 'src/config/keycloak';
 const keycloakProviderInitConfig = {
   onLoad: "check-sso"
 };
+const keycloakEvent = {
+  ON_AUTH_SUCCESS: "onAuthSuccess"
+}
 
 const App: React.FC = () => {
-  const onKeycloakEvent = (event: any, error: any) => {
+  const onKeycloakEvent = (event: String, error: any) => {
     console.log("KcEventName: " + event, "Error: " + error);
+    if(event == keycloakEvent.ON_AUTH_SUCCESS) {
+      console.log(keycloak.tokenParsed);
+      
+    }
   }
 
   return (
