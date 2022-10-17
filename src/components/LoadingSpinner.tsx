@@ -1,6 +1,9 @@
+import CircularProgress from "@mui/material/CircularProgress";
+
+
 function LoadingSpinner() {
   return (
-    <p>Wait............</p>
+    <CircularProgress />
   );
 }
 

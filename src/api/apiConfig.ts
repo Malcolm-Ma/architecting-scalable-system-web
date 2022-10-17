@@ -9,7 +9,7 @@ const apiConfig = {
     recommend: '/commodity/show_commodity_in_home_page'
   },
   user: {
-    create: ''
+    create: '/user/add'
   },
   cart: {
     create: ''
