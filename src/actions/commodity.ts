@@ -6,3 +6,5 @@ import api from "src/api";
 import apiConfig from "src/api/apiConfig";
 
 export const searchCommodity = (params: any) => api.post(apiConfig.commodity.search, params);
+
+export const recommendCommodity = (params: any) => api.get(apiConfig.commodity.recommend, params);
