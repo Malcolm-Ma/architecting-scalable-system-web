@@ -8,7 +8,7 @@ const apiConfig = {
     search: '/commodity/search_commodity'
   },
   user: {
-    create: ''
+    create: '/user/add'
   },
   cart: {
     create: ''
