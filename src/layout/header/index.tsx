@@ -18,11 +18,18 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useKeycloak } from '@react-keycloak/web'
+import _ from "lodash";
+import {Stack} from "@mui/material";
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const SETTINGS = {
+  profile: 'Profile',
+  account: 'Account',
+  dashboard: 'Dashboard',
+  logout: 'Logout'
+};
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar: React.FC = () => {
 
   const { keycloak } = useKeycloak();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -39,11 +46,12 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (setting: string) => {
+    if (setting === SETTINGS.logout) {
+      keycloak.logout();
+    }
     setAnchorElUser(null);
   };
-
-  console.log("Access Token: " + keycloak.token);
 
   return (
     <AppBar>
@@ -134,46 +142,46 @@ const ResponsiveAppBar = () => {
               </Button>
             ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
-            {keycloak.authenticated
-              ? <button className="btn btn-lg btn-warning" onClick={() => keycloak.logout()}>
-                Logout
-              </button>
-              : <button className="btn btn-lg btn-warning" onClick={() => keycloak.login()}>
-                Login
-              </button>
+            {
+              keycloak.authenticated ? <>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {_.values(SETTINGS).map((setting: string) => (
+                    <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </>
+                : <Stack spacing={1} direction="row">
+                  <Button size="large" color="inherit" onClick={() => keycloak.login()}>Sign in</Button>
+                  <Button
+                    color="inherit"
+                    variant="outlined"
+                    onClick={() => keycloak.register()}
+                  >Sign up</Button>
+                </Stack>
             }
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
         </Toolbar>
       </Container>
