@@ -2,16 +2,20 @@
  * @file Home index
  * @author Mingze Ma
  */
-import React, {useCallback, useEffect} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import actions from "src/actions";
+import Container from "@mui/material/Container";
 
 const Home: React.FC = () => {
 
+  const [_result, setResult] = useState<any>([]);
+
   const getCommodityList = useCallback(async () => {
     try {
-      const res = await actions.searchCommodity({
-        keyword: '',
+      const res = await actions.recommendCommodity({
+        limit: 10,
       });
+      setResult(res);
       console.log('--res--\n', res);
     } catch (e) {
       console.error(e);
@@ -23,7 +27,9 @@ const Home: React.FC = () => {
   }, [getCommodityList]);
 
   return (
-    <>Home</>
+    <Container maxWidth="xl">
+
+    </Container>
   );
 };
 

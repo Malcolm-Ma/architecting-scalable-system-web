@@ -21,7 +21,7 @@ export class Request {
     });
   }
 
-  public get(url: string, data: any, options: AxiosRequestConfig<any> | undefined) {
+  public get(url: string, data: any, options?: AxiosRequestConfig<any> | undefined) {
     return this.axiosInstance(url, {
       method: 'get',
       params: data,
