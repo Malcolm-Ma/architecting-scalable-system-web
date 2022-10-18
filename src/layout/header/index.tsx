@@ -54,7 +54,7 @@ const ResponsiveAppBar: React.FC = () => {
   };
 
   return (
-    <AppBar>
+    <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
