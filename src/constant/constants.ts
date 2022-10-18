@@ -3,4 +3,4 @@
  * @author Mingze Ma
  */
 
-export const EXAMPLE = '';
+export const HEADER_HEIGHT = '68px';
