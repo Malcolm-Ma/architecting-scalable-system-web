@@ -6,8 +6,7 @@
 import axios, {AxiosError, AxiosInstance, AxiosRequestConfig} from "axios";
 import keycloak from "src/config/keycloak";
 import {message} from "antd";
-
-const SERVICE_BASE_URL = 'http://localhost:8090';
+import {SERVICE_BASE_URL} from "src/constant/network";
 
 export class Request {
   private readonly axiosInstance: AxiosInstance;
@@ -50,7 +49,7 @@ export class Request {
             // Was refreshing the access token successfull?
             if (result === true) {
               // Repeat the request
-              return await axios({ ...error.config });
+              return await axios({...error.config});
             } else {
               // If the access token could not be refreshed we reject the promise
               // and the code responsible for the request has to handle it.
@@ -64,7 +63,7 @@ export class Request {
         // Handle Error from BE
         const data: any = error.response?.data;
         if (data) {
-          const { status, message: errMessage, error: err, path } = data;
+          const {status, message: errMessage, error: err, path} = data;
           console.error(`${status} ${err}: ${errMessage}, on path:${path}`);
           message.error(`${status}-${err}: ${errMessage}, on path:${path}`);
         } else {
