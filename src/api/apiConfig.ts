@@ -9,7 +9,9 @@ const apiConfig = {
     recommend: '/commodity/show_commodity_in_home_page'
   },
   user: {
-    create: '/user/add'
+    create: '/user/add',
+    update: '/user/update',
+    getByKcId: 'user/getByKcId'
   },
   cart: {
     create: ''
