@@ -33,25 +33,31 @@ const App: React.FC = () => {
     }
     //On auth success
     else if (event === keycloakEvent.ON_AUTH_SUCCESS) {
-      console.log(keycloak.tokenParsed);
-      const reqBody = {
-        user_username: keycloak.tokenParsed!.preferred_username,
-        user_email: keycloak.tokenParsed!.email,
-        user_age: keycloak.tokenParsed!.age,
-        user_contact: keycloak.tokenParsed!.contact,
-        user_firstname: keycloak.tokenParsed!.given_name,
-        user_lastname: keycloak.tokenParsed!.family_name,
-        user_email_verified: keycloak.tokenParsed!.email_verified,
-        keycloak_id: keycloak.tokenParsed!.sub,
-        user_enabled: true
+      const kcIdParam = {
+        kcId: keycloak.tokenParsed!.sub
       };
-      // actions.createNewUser(reqBody).catch((error) => {
-      //   console.log(error.response.data);
-      // });
-      const res = await actions.createNewUser(reqBody).catch((error) => {
-        console.log(error.response.data);
-      });
-      console.log('--create user res--\n', res);
+      const getRes = await actions.getUserByKcId(kcIdParam)
+        .then(() => {
+          // update userInfo ???
+        })
+        .catch((error) => {
+          if (error.response.data.status == 404) {
+            const reqBody = {
+              user_username: keycloak.tokenParsed!.preferred_username,
+              user_email: keycloak.tokenParsed!.email,
+              user_age: keycloak.tokenParsed!.age,
+              user_contact: keycloak.tokenParsed!.contact,
+              user_firstname: keycloak.tokenParsed!.given_name,
+              user_lastname: keycloak.tokenParsed!.family_name,
+              user_email_verified: keycloak.tokenParsed!.email_verified,
+              keycloak_id: keycloak.tokenParsed!.sub,
+              user_enabled: true
+            };
+            actions.createNewUser(reqBody);
+          }
+          console.log(error.response.data);
+        });
+      console.log(getRes);
     }
   }
 
