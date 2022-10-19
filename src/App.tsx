@@ -22,7 +22,7 @@ const keycloakEvent = {
 const App: React.FC = () => {
   const [loadingTag, setLoadingTag] = useState(true);
 
-  const onKeycloakEvent = (event: String, error: any) => {
+  const onKeycloakEvent = async (event: String, error: any) => {
     console.log("KcEventName: " + event, "Error: " + error);
     // If init failed, continue to load UI components
     if (event == keycloakEvent.ON_INIT_ERROR) {
@@ -42,9 +42,13 @@ const App: React.FC = () => {
         keycloak_id: keycloak.tokenParsed!.sub,
         user_enabled: true
       };
-      actions.createNewUser(reqBody).catch((error) => {
+      // actions.createNewUser(reqBody).catch((error) => {
+      //   console.log(error.response.data);
+      // });
+      const res = await actions.createNewUser(reqBody).catch((error) => {
         console.log(error.response.data);
       });
+      console.log('--create user res--\n', res);
     }
     
   }
