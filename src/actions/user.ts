@@ -5,4 +5,4 @@ export const createNewUser = (paramsBody: any) => api.post(apiConfig.user.create
 
 export const updateUser = (paramsBody: any) => api.post(apiConfig.user.update, paramsBody)
 
-export const getUserByKcId = (params: any) => api.get(apiConfig.user.getByKcId, params);
+export const getAndUpdateUser = (paramsBody: any) => api.post(apiConfig.user.getAndUpdate, paramsBody);

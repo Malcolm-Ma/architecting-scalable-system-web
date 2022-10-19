@@ -21,6 +21,7 @@ export class Request {
       config.headers!.Authorization = (keycloak.authenticated ? `Bearer ${keycloak.token}` : "");
       return config;
     });
+    // Intercepter handling error response
     this.axiosInstance.interceptors.response.use(
       (response) => {
         console.log('--response--\n', response);
