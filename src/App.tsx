@@ -3,13 +3,16 @@
  * @author Mingze Ma
  */
 
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Layout from "src/layout";
 import ELearnThemeProvider from "./theme";
-import { ReactKeycloakProvider } from '@react-keycloak/web';
+import {ReactKeycloakProvider} from '@react-keycloak/web';
 import keycloak from 'src/config/keycloak';
 import LoadingSpinner from "./components/LoadingSpinner";
 import actions from "./actions";
+
+// antd style import
+import 'antd/dist/antd.css';
 
 const keycloakProviderInitConfig = {
   onLoad: "check-sso"
@@ -25,11 +28,11 @@ const App: React.FC = () => {
   const onKeycloakEvent = async (event: String, error: any) => {
     console.log("KcEventName: " + event, "Error: " + error);
     // If init failed, continue to load UI components
-    if (event == keycloakEvent.ON_INIT_ERROR) {
+    if (event === keycloakEvent.ON_INIT_ERROR) {
       setLoadingTag(false);
     }
     //On auth success
-    else if (event == keycloakEvent.ON_AUTH_SUCCESS) {
+    else if (event === keycloakEvent.ON_AUTH_SUCCESS) {
       console.log(keycloak.tokenParsed);
       const reqBody = {
         user_username: keycloak.tokenParsed!.preferred_username,
@@ -50,11 +53,10 @@ const App: React.FC = () => {
       });
       console.log('--create user res--\n', res);
     }
-    
   }
 
   const loadingProps = loadingTag ? {
-    LoadingComponent: <LoadingSpinner />
+    LoadingComponent: <LoadingSpinner/>
   } : {}
 
   return (
@@ -66,7 +68,7 @@ const App: React.FC = () => {
     >
 
       <ELearnThemeProvider>
-        <Layout />
+        <Layout/>
       </ELearnThemeProvider>
 
     </ReactKeycloakProvider>

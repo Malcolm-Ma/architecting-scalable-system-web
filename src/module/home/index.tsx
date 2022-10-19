@@ -28,7 +28,7 @@ const Home: React.FC = () => {
 
   return (
     <Container maxWidth="xl">
-
+      Home
     </Container>
   );
 };

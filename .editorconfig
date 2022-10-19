@@ -1,0 +1,18 @@
+root = true
+
+[*]
+# indent style, [tab | space].
+indent_style = space
+# indent size, integer. if indent_style is tab, this config will be tab_width.
+indent_size = 2
+# end of line, [lf | cr | crlf]
+end_of_line = lf
+# charset, latin1, utf-8, utf-8-bom, utf-16be and utf-16le, utf-8-bom is not suggested.
+charset = utf-8
+
+trim_trailing_whitespace = true
+
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
