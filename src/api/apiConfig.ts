@@ -11,7 +11,7 @@ const apiConfig = {
   user: {
     create: '/user/add',
     update: '/user/update',
-    getByKcId: 'user/getByKcId'
+    getAndUpdate: 'user/get_update'
   },
   cart: {
     create: ''
