@@ -40,7 +40,7 @@ export default function Carousel(props: CarouselProps) {
         maxWidth: '1152px'
       }}
     >
-      <AntCarousel {...carouselProps}>
+      <AntCarousel autoplay={true} effect="fade" {...carouselProps}>
         {_.map(data, (item, index) => (
           <CarouselCard content={item} key={index} height={height} />
         ))}
