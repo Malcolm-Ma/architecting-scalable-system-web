@@ -24,7 +24,6 @@ export class Request {
     // Intercepter handling error response
     this.axiosInstance.interceptors.response.use(
       (response) => {
-        console.log('--response--\n', response);
         // valid response
         if (response.status === 200) {
           const {code, message: resMessage, data} = response.data;
