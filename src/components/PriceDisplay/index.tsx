@@ -2,7 +2,7 @@
  * @file PriceDisplay
  * @author Mingze Ma
  */
-import {BoxProps, TypographyProps} from "@mui/material";
+import {BoxProps, SxProps, TypographyProps} from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import {red} from "@mui/material/colors";
@@ -13,12 +13,13 @@ interface PriceDisplayProps {
   price: number,
   discount?: number | null | undefined,
   boxProps?: BoxProps,
+  boxStyle?: SxProps,
   priceProps?: TypographyProps,
   discountProps?: TypographyProps,
 }
 
 export default function PriceDisplay(props: PriceDisplayProps) {
-  const {price = 0, discount, boxProps, priceProps, discountProps} = props;
+  const {price = 0, discount, boxProps, boxStyle, priceProps, discountProps} = props;
 
   const validDiscount = useMemo(() => (_.isNumber(discount) && discount > 0 && discount < 1), [discount]);
 
@@ -29,18 +30,18 @@ export default function PriceDisplay(props: PriceDisplayProps) {
     return price;
   }, [discount, price, validDiscount]);
 
-  return(
+  return (
     <Box
-      sx={{py: 2, display: 'flex'}}
+      sx={{py: 2, display: 'flex', ...boxStyle}}
       {...boxProps}
     >
       <Typography
         color={validDiscount ? red[500] : 'inherit'}
         variant="body1"
-        sx={{ pr: 1 }}
+        sx={{pr: 1}}
         {...priceProps}
       >
-        ${currentPrice}
+        <b>${currentPrice}</b>
       </Typography>
       {validDiscount && <Typography
         variant="body1"
