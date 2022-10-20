@@ -4,7 +4,7 @@
  */
 
 import {Carousel as AntCarousel, CarouselProps as AntCarouselProps} from 'antd';
-import {useCallback, useEffect} from "react";
+import {useCallback} from "react";
 import _ from "lodash";
 import CarouselCard from "src/components/Carousel/CarouselCard";
 
@@ -12,7 +12,7 @@ import './index.less';
 import Container from "@mui/material/Container";
 import {useTheme} from "@mui/material";
 
-interface CarouselProps extends AntCarouselProps{
+interface CarouselProps extends AntCarouselProps {
   data: any,
   height: number
 }
@@ -25,10 +25,6 @@ export default function Carousel(props: CarouselProps) {
   const handleCommodityClick = useCallback((id: string) => {
     window.open('/commodity/' + id);
   }, []);
-
-  useEffect(() => {
-    console.log('--data--\n', data);
-  }, [data]);
 
   return (
     <Container

@@ -6,9 +6,8 @@ import Box from "@mui/material/Box";
 import React, {useMemo} from "react";
 import _ from "lodash";
 import Typography from "@mui/material/Typography";
-import {Chip} from "@mui/material";
-import StarIcon from '@mui/icons-material/Star';
 import PriceDisplay from "src/components/PriceDisplay";
+import OverviewChip from "src/components/OverviewChip";
 
 interface CarouselCardProps {
   content: object,
@@ -66,27 +65,12 @@ export default function CarouselCard(props: CarouselCardProps) {
           price={_.get(content, 'commodity_price', 0)}
           discount={_.get(content, 'commodity_discount', 1)}
         />
-        <Box sx={{pb: 2}}>
-          <Chip
-            className="commodity-star"
-            sx={{color: '#fff', mr: 1}}
-            size="small"
-            variant="outlined"
-            icon={<StarIcon/>}
-            label={_.get(content, 'commodity_star', 0) + ' stars'}
-          />
-          <Chip
-            sx={{color: '#fff'}}
-            size="small"
-            variant="outlined"
-            label={
-              <span>
-                {_.get(content, 'commodity_sold_cnt', 0).toLocaleString()}
-                <Typography component="span" variant="body2"> sold</Typography>
-              </span>
-            }
-          />
-        </Box>
+        <OverviewChip
+          star={_.get(content, 'commodity_star', 0)}
+          sold={_.get(content, 'commodity_sold_cnt', 0)}
+          chipStyle={{ color: '#fff', mr: 1 }}
+          starColor="#fff"
+        />
       </Box>
       <Box
         sx={imageContainerSx}
