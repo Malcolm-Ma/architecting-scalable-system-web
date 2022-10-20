@@ -4,7 +4,7 @@
  */
 
 import {Carousel as AntCarousel, CarouselProps as AntCarouselProps} from 'antd';
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
 import _ from "lodash";
 import CarouselCard from "src/components/Carousel/CarouselCard";
 
@@ -21,6 +21,10 @@ export default function Carousel(props: CarouselProps) {
   const {data, height, ...carouselProps} = props;
 
   const theme = useTheme();
+
+  const handleCommodityClick = useCallback((id: string) => {
+    window.open('/commodity/' + id);
+  }, []);
 
   useEffect(() => {
     console.log('--data--\n', data);
@@ -42,7 +46,12 @@ export default function Carousel(props: CarouselProps) {
     >
       <AntCarousel autoplay={true} effect="fade" {...carouselProps}>
         {_.map(data, (item, index) => (
-          <CarouselCard content={item} key={index} height={height} />
+          <CarouselCard
+            content={item}
+            key={index}
+            height={height}
+            onClick={() => handleCommodityClick(_.get(item, 'commodity_id'))}
+          />
         ))}
       </AntCarousel>
     </Container>

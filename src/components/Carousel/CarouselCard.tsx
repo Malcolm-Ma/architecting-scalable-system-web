@@ -3,7 +3,7 @@
  * @author Mingze Ma
  */
 import Box from "@mui/material/Box";
-import {useMemo} from "react";
+import React, {useMemo} from "react";
 import _ from "lodash";
 import Typography from "@mui/material/Typography";
 import {Chip} from "@mui/material";
@@ -12,11 +12,12 @@ import PriceDisplay from "src/components/PriceDisplay";
 
 interface CarouselCardProps {
   content: object,
-  height: number
+  height: number,
+  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined
 }
 
 export default function CarouselCard(props: CarouselCardProps) {
-  const {content, height} = props;
+  const {content, height, onClick} = props;
 
   const imageContainerSx = useMemo(() => ({
     backgroundImage: `url(${_.replace(_.get(content, 'commodity_cover'), ' ', '%20')})`,
@@ -41,17 +42,19 @@ export default function CarouselCard(props: CarouselCardProps) {
         position: 'relative',
         cursor: 'pointer'
       }}
+      onClick={onClick}
     >
-      <Box sx={{
-        width: '30%',
-        color: '#fff',
-        backgroundColor: 'rgba(0,0,0,.4)',
-        py: 3,
-        px: 2,
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column',
-      }}
+      <Box
+        sx={{
+          width: '30%',
+          color: '#fff',
+          backgroundColor: 'rgba(0,0,0,.4)',
+          py: 3,
+          px: 2,
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}
       >
         <Typography variant="h3" sx={{color: 'inherit', py: 2}}>
           {_.get(content, 'commodity_name', 'Unknown')}
