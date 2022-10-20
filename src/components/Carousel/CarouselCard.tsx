@@ -63,7 +63,7 @@ export default function CarouselCard(props: CarouselCardProps) {
           price={_.get(content, 'commodity_price', 0)}
           discount={_.get(content, 'commodity_discount', 1)}
         />
-        <Box>
+        <Box sx={{pb: 2}}>
           <Chip
             className="commodity-star"
             sx={{color: '#fff', mr: 1}}
