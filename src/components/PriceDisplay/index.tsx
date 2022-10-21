@@ -38,13 +38,14 @@ export default function PriceDisplay(props: PriceDisplayProps) {
       <Typography
         color={validDiscount ? red[500] : 'inherit'}
         variant="body1"
-        sx={{pr: 1}}
+        sx={{pr: 2}}
         {...priceProps}
       >
         <b>${currentPrice}</b>
       </Typography>
       {validDiscount && <Typography
         variant="body1"
+        sx={{color: 'text.secondary'}}
         {...discountProps}
       >
         <s>${_.floor(price, 2)}</s>

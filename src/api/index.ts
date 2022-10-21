@@ -62,13 +62,13 @@ export class Request {
         }
         // Handle Error from BE
         const data: any = error.response?.data;
-        if (data && data.message != "User doesn't exist.") {
+        if (data && data.message !== "User doesn't exist.") {
           console.log(data);
           const {status, message: errMessage, error: err, path} = data;
           console.error(`${status} ${err}: ${errMessage}, on path:${path}`);
           message.error(`${status}-${err}: ${errMessage}, on path:${path}`);
         } else {
-          if (error.name == AxiosError.ERR_NETWORK) {
+          if (error.name === AxiosError.ERR_NETWORK) {
             message.error(error.message + ', please check the network');
             return;
           }

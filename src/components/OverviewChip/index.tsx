@@ -5,7 +5,6 @@
 import React from "react";
 import {Chip, SxProps} from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
-import _ from "lodash";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 

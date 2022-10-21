@@ -49,7 +49,7 @@ const App: React.FC = () => {
           console.log("--get and update res--\n", res);
         })
         .catch((error) => {
-          if (error.response.data.status == 404) {
+          if (error.response.data.status === 404) {
             actions.createNewUser(reqBody);
           }
           console.log(error.response.data);
