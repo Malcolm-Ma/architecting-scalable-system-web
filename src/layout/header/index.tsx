@@ -19,7 +19,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useKeycloak } from '@react-keycloak/web'
 import _ from "lodash";
-import {Stack} from "@mui/material";
+import {Stack, useTheme} from "@mui/material";
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const SETTINGS = {
@@ -30,6 +30,7 @@ const SETTINGS = {
 };
 
 const ResponsiveAppBar: React.FC = () => {
+  const theme = useTheme();
 
   const { keycloak } = useKeycloak();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -54,12 +55,12 @@ const ResponsiveAppBar: React.FC = () => {
   };
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="fixed" sx={{bgcolor: theme.palette.background.default}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: theme.palette.primary.main }} />
           <Typography
-            variant="h6"
+            variant="h3"
             noWrap
             component="a"
             href="/"
@@ -69,7 +70,6 @@ const ResponsiveAppBar: React.FC = () => {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
               textDecoration: 'none',
             }}
           >
@@ -83,7 +83,6 @@ const ResponsiveAppBar: React.FC = () => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
             >
               <MenuIcon />
             </IconButton>
@@ -107,12 +106,12 @@ const ResponsiveAppBar: React.FC = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography variant="h5" textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, color: theme.palette.primary.main }} />
           <Typography
             variant="h5"
             noWrap
@@ -125,20 +124,19 @@ const ResponsiveAppBar: React.FC = () => {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            LOGO
+            E-Learn
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, display: 'block' }}
               >
-                {page}
+                <Typography variant="subtitle1" fontWeight="bold">{page}</Typography>
               </Button>
             ))}
           </Box>

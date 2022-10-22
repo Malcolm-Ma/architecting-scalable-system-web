@@ -27,24 +27,26 @@ const ColorOptions = (colors: any) => {
   const contrastText = '#fff';
 
   const newColor = [
-    '#b4bee2',
-    '#9fabd5',
-    '#8997c5',
-    '#7786b7',
-    '#6171a6'
+    '#d1d3e0',
+    '#b0b3cb',
+    '#9197b7',
+    '#596b96',
+    '#31405d'
   ]
 
   return {
     primary: {
-      lighter: blue[0],
+      // lighter: blue[1],
+      lighter: newColor[0],
       100: blue[1],
       200: blue[2],
-      light: blue[3],
+      // light: blue[2],
+      light: newColor[1],
       400: blue[4],
       // main: blue[5],
-
-      main: newColor[4],
-      dark: blue[6],
+      main: newColor[3],
+      // dark: blue[4],
+      dark: newColor[3],
       700: blue[7],
       darker: blue[8],
       900: blue[9],

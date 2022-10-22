@@ -167,6 +167,7 @@ module.exports = function (webpackEnv) {
       },
     ].filter(Boolean);
     if (preProcessor) {
+      console.log('--preProcessor--\n', preProcessor);
       loaders.push(
         {
           loader: require.resolve('resolve-url-loader'),
@@ -179,7 +180,7 @@ module.exports = function (webpackEnv) {
           loader: require.resolve(preProcessor),
           options: {
             sourceMap: true,
-            lessOptions: preProcessor === 'less-loader' ? { javascriptEnabled: true } : undefined
+            ...(preProcessor === 'less-loader' && {lessOptions: { javascriptEnabled: true }})
           },
         }
       );

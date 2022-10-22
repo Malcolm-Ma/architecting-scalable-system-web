@@ -10,9 +10,14 @@ import {ReactKeycloakProvider} from '@react-keycloak/web';
 import keycloak from 'src/config/keycloak';
 import LoadingSpinner from "./components/LoadingSpinner";
 import actions from "./actions";
+import {message} from "antd";
 
 // antd style import
 import 'antd/dist/antd.css';
+
+message.config({
+  top: 80,
+});
 
 const keycloakProviderInitConfig = {
   onLoad: "check-sso"

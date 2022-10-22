@@ -33,15 +33,14 @@ const Home: React.FC = () => {
   }, [getHomeCommodityList]);
 
   return (
-    <Container maxWidth="xl" disableGutters>
+    <Container maxWidth="xl" sx={{ bgcolor: 'grey.100' }}>
       {
         !_.isEmpty(result)
           ? <>
             <Box
               sx={{
-                background: '#fff',
                 mx: '-24px',
-                mt: '-24px',
+                bgcolor: 'background.default'
               }}
             >
               <Carousel data={result.slice(0, 3)} height={480} autoplay>
