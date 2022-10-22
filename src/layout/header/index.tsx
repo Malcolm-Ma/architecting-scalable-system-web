@@ -172,9 +172,8 @@ const ResponsiveAppBar: React.FC = () => {
                 </Menu>
               </>
                 : <Stack spacing={1} direction="row">
-                  <Button size="large" color="inherit" onClick={() => keycloak.login()}>Sign in</Button>
+                  <Button size="large" onClick={() => keycloak.login()}>Sign in</Button>
                   <Button
-                    color="inherit"
                     variant="outlined"
                     onClick={() => keycloak.register()}
                   >Sign up</Button>

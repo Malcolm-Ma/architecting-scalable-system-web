@@ -29,7 +29,7 @@ const OverviewChip: React.FC<OverviewChipProps> = (props) => {
         variant="outlined"
         icon={<StarIcon style={{color: starColor}}/>}
         label={
-          <span><b>{star}</b><Typography component="span" variant="body2"> stars</Typography></span>
+          <span><b>{star}</b><Typography sx={{color: starColor}} component="span" variant="body2"> stars</Typography></span>
         }
       />
       <Chip
@@ -39,7 +39,7 @@ const OverviewChip: React.FC<OverviewChipProps> = (props) => {
         label={
           <span>
             <b>{sold.toLocaleString()}</b>
-            <Typography component="span" variant="body2"> sold</Typography>
+            <Typography component="span" variant="body2" sx={{color: starColor}}> enrolled</Typography>
           </span>
         }
       />

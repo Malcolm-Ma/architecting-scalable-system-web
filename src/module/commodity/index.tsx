@@ -46,7 +46,7 @@ const Commodity: React.FC = () => {
       {!loading
         ? <>
           {!_.isNil(detailData)
-            ? <Container disableGutters>
+            ? <Container disableGutters maxWidth={false}>
               <CommodityBrief data={detailData}/>
             </Container>
             : <Alert sx={{m: 3}} severity="error">The commodity does not exist, please try again</Alert>
