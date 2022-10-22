@@ -11,6 +11,7 @@ import Carousel from "src/components/Carousel";
 import _ from "lodash";
 import CircularProgress from "@mui/material/CircularProgress";
 import ProductCard from "src/components/ProductCard";
+import Typography from "@mui/material/Typography";
 
 const Home: React.FC = () => {
 
@@ -51,6 +52,9 @@ const Home: React.FC = () => {
                 pt: 3,
               }}
             >
+              <Typography variant="h3" sx={{pb: 2}}>
+                TOP Star Courses
+              </Typography>
               <ProductCard data={result.slice(3)} />
             </Box>
           </>

@@ -9,6 +9,9 @@ const apiConfig = {
     recommend: '/commodity/show_commodity_in_home_page',
     detail: '/commodity/get_commodity_info'
   },
+  course: {
+
+  },
   user: {
     create: '/user/add',
     update: '/user/update',

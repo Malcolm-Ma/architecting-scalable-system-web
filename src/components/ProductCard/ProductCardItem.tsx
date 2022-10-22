@@ -12,13 +12,14 @@ import OverviewChip from "src/components/OverviewChip";
 
 interface ProductCardItemProps {
   content: any,
+  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined
 }
 
 const ProductCardItem: React.FC<ProductCardItemProps> = (props) => {
-  const {content} = props;
+  const {content, onClick} = props;
 
   return (
-    <Card sx={{maxWidth: 345, height: '100%'}}>
+    <Card sx={{maxWidth: 345, height: '100%'}} onClick={onClick}>
       <CardActionArea sx={{height: '100%'}}>
         <CardMedia
           component="img"

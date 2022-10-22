@@ -14,6 +14,9 @@ import {message} from "antd";
 
 // antd style import
 import 'antd/dist/antd.css';
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "src/reducer";
+import {setRole, setUserInfo} from "src/reducer/globalReducer";
 
 message.config({
   top: 80,
@@ -30,6 +33,8 @@ const keycloakEvent = {
 const App: React.FC = () => {
   const [loadingTag, setLoadingTag] = useState(true);
 
+  const dispatch = useDispatch<AppDispatch>();
+
   const onKeycloakEvent = (event: String, error: any) => {
     console.log("KcEventName: " + event, "Error: " + error);
     // If init failed, continue to load UI components
@@ -38,6 +43,7 @@ const App: React.FC = () => {
     }
     //On auth success
     else if (event === keycloakEvent.ON_AUTH_SUCCESS) {
+      console.log('--keycloak.tokenParsed--\n', keycloak.tokenParsed);
       const reqBody = {
         user_username: keycloak.tokenParsed!.preferred_username,
         user_email: keycloak.tokenParsed!.email,
@@ -49,13 +55,13 @@ const App: React.FC = () => {
         keycloak_id: keycloak.tokenParsed!.sub,
         user_enabled: true
       };
-      actions.getAndUpdateUser(reqBody)
-        .then((res) => {
-          console.log("--get and update res--\n", res);
-        })
+      dispatch(actions.getAndUpdateUser({requestParams: reqBody, keycloakRes: keycloak.tokenParsed})).unwrap()
         .catch((error) => {
           if (error.response.data.status === 404) {
-            actions.createNewUser(reqBody);
+            actions.createNewUser(reqBody).then((res) => {
+              dispatch(setUserInfo(res));
+              dispatch(setRole(keycloak.tokenParsed));
+            });
           }
           console.log(error.response.data);
         });
