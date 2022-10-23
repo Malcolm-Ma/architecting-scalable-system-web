@@ -17,9 +17,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useKeycloak } from '@react-keycloak/web'
+import {useKeycloak} from '@react-keycloak/web'
 import _ from "lodash";
 import {Stack, useTheme} from "@mui/material";
+import CommoditySelect from "src/layout/header/CommoditySelect";
+import {useSelector} from "react-redux";
+import {RootState} from "src/reducer";
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const SETTINGS = {
@@ -29,10 +32,18 @@ const SETTINGS = {
   logout: 'Logout'
 };
 
-const ResponsiveAppBar: React.FC = () => {
+interface ResponsiveAppBarProps {
+  isAdmin?: boolean,
+}
+
+const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
+  const {isAdmin = false} = props;
+
   const theme = useTheme();
 
-  const { keycloak } = useKeycloak();
+  const user = useSelector((state: RootState) => state.global);
+
+  const {keycloak} = useKeycloak();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -58,7 +69,7 @@ const ResponsiveAppBar: React.FC = () => {
     <AppBar position="fixed" sx={{bgcolor: theme.palette.background.default}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: theme.palette.primary.main }} />
+          <AdbIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1, color: theme.palette.primary.main}}/>
           <Typography
             variant="h3"
             noWrap
@@ -66,7 +77,7 @@ const ResponsiveAppBar: React.FC = () => {
             href="/"
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
+              display: {xs: 'none', md: 'flex'},
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
@@ -76,80 +87,90 @@ const ResponsiveAppBar: React.FC = () => {
             E-Learn
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography variant="h5" textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, color: theme.palette.primary.main }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              textDecoration: 'none',
-            }}
-          >
-            E-Learn
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, display: 'block' }}
+          {!isAdmin && <>
+            <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
               >
-                <Typography variant="subtitle1" fontWeight="bold">{page}</Typography>
-              </Button>
-            ))}
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            {
-              keycloak.authenticated ? <>
+                <MenuIcon/>
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: {xs: 'block', md: 'none'},
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography variant="h5" textAlign="center">{page}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1, color: theme.palette.primary.main}}/>
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href=""
+              sx={{
+                mr: 2,
+                display: {xs: 'flex', md: 'none'},
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                textDecoration: 'none',
+              }}
+            >
+              E-Learn
+            </Typography>
+            <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
+              {pages.map((page) => (
+                <Button
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{my: 2, display: 'block'}}
+                >
+                  <Typography variant="subtitle1" fontWeight="bold">{page}</Typography>
+                </Button>
+              ))}
+            </Box>
+          </>}
+          {isAdmin && <>
+            <Box sx={{flexGrow: 1, display: 'flex'}}>
+              <CommoditySelect/>
+            </Box>
+          </>}
+
+          <Box sx={{flexGrow: 0}}>
+            {keycloak.authenticated
+              ? <>
                 <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                    <Avatar
+                      alt={_.get(user, 'userInfo.user_lastname', 'Unknown')}
+                      src={_.get(user, 'userInfo.user_avatar', '#')}/>
                   </IconButton>
                 </Tooltip>
                 <Menu
-                  sx={{ mt: '45px' }}
+                  sx={{mt: '45px'}}
                   id="menu-appbar"
                   anchorEl={anchorElUser}
                   anchorOrigin={{
@@ -171,13 +192,13 @@ const ResponsiveAppBar: React.FC = () => {
                   ))}
                 </Menu>
               </>
-                : <Stack spacing={1} direction="row">
-                  <Button size="large" onClick={() => keycloak.login()}>Sign in</Button>
-                  <Button
-                    variant="outlined"
-                    onClick={() => keycloak.register()}
-                  >Sign up</Button>
-                </Stack>
+              : <Stack spacing={1} direction="row">
+                <Button size="large" onClick={() => keycloak.login()}>Sign in</Button>
+                <Button
+                  variant="outlined"
+                  onClick={() => keycloak.register()}
+                >Sign up</Button>
+              </Stack>
             }
           </Box>
         </Toolbar>

@@ -11,7 +11,7 @@ const initialState = {
   init: false,
   loggedIn: false,
   token: '',
-  userinfo: {},
+  userInfo: {},
 };
 
 const globalSlice = createSlice({
@@ -25,7 +25,7 @@ const globalSlice = createSlice({
       state.loggedIn = action.payload.status;
     },
     setUserInfo(state, action) {
-      state.userinfo = action.payload;
+      state.userInfo = action.payload;
     },
     setRole(state, action) {
       const role = (() => {
@@ -38,8 +38,8 @@ const globalSlice = createSlice({
         }
         return 'none';
       })();
-      state.userinfo = {
-        ...state.userinfo,
+      state.userInfo = {
+        ...state.userInfo,
         role,
       }
     }
@@ -50,12 +50,12 @@ const globalSlice = createSlice({
         return _.cloneDeep(initialState);
       })
       .addCase(getAndUpdateUser.fulfilled, (state, action) => {
-        state.userinfo = action.payload;
+        state.userInfo = action.payload;
         state.init = true;
         state.loggedIn = true;
       })
       .addCase(getAndUpdateUser.rejected, (state) => {
-        state.userinfo = {};
+        state.userInfo = {};
         state.init = false;
         state.loggedIn = false;
       })

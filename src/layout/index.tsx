@@ -8,6 +8,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
 import { routeMainConfig, routeAdminConfig } from "src/config/routes";
 import MainLayout from "src/layout/MainLayout";
+import TeacherLayout from "src/layout/TeacherLayout";
 
 const Layout: React.FC = () => {
   const router = createBrowserRouter([
@@ -18,7 +19,7 @@ const Layout: React.FC = () => {
     },
     {
       path: '/teacher',
-      element: <MainLayout />,
+      element: <TeacherLayout />,
       children: routeAdminConfig,
     }
   ]);
