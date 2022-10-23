@@ -30,18 +30,20 @@ jobs:
 
     # Configure Docker to use the gcloud command-line tool as a credential
     # helper for authentication
-    - run: |-
+    - name: Configure Docker
+      run: |-
         gcloud --quiet auth configure-docker
     # Get the GKE credentials so we can deploy to the cluster
-    - run: |-
+    - name: Get GKE Credentials
+      run: |-
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
     # Build the Docker image
-    - name: Build
+    - name: Build Docker Image
       run: |-
         docker build \
           --tag "gcr.io/$PROJECT_ID/$IMAGE:$TAG" .
     # Push the Docker image to Google Container Registry
-    - name: Publish
+    - name: Publish Docker Image to GCR
       run: |-
         docker push "gcr.io/$PROJECT_ID/$IMAGE:$TAG"
     # Set up kustomize
@@ -50,7 +52,7 @@ jobs:
         curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
     # Deploy the Docker image to the GKE cluster
-    - name: Deploy
+    - name: Deploy Image to GKE Cluster
       run: |-
         ./kustomize edit set image gcr.io/PROJECT_ID/IMAGE:TAG=gcr.io/$PROJECT_ID/$IMAGE:$TAG
         ./kustomize build . | kubectl apply -f -
