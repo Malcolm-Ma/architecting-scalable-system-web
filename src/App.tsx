@@ -27,7 +27,6 @@ const keycloakProviderInitConfig = {
 };
 const keycloakEvent = {
   ON_AUTH_SUCCESS: "onAuthSuccess",
-  ON_READY: "onReady",
   ON_INIT_ERROR: "onInitError"
 }
 
@@ -40,10 +39,8 @@ const App: React.FC = () => {
     console.log("KcEventName: " + event, "Error: " + error);
     // If init failed, continue to load UI components
     if (event === keycloakEvent.ON_INIT_ERROR) {
-      setLoadingTag(false);
-    }
-    else if (event === keycloakEvent.ON_READY) {
       dispatch(setInit(true));
+      setLoadingTag(false);
     }
     //On auth success
     else if (event === keycloakEvent.ON_AUTH_SUCCESS) {

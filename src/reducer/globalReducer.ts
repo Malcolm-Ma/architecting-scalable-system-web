@@ -51,13 +51,13 @@ const globalSlice = createSlice({
       })
       .addCase(getAndUpdateUser.fulfilled, (state, action) => {
         state.userInfo = action.payload;
-        state.init = true;
         state.loggedIn = true;
+        state.init = true;
       })
       .addCase(getAndUpdateUser.rejected, (state) => {
         state.userInfo = {};
-        state.init = true;
         state.loggedIn = false;
+        state.init = true;
       })
   }
 });

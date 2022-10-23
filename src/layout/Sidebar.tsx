@@ -6,10 +6,11 @@
 import {AppstoreOutlined, SettingOutlined, HomeOutlined, DesktopOutlined} from '@ant-design/icons';
 import type {MenuProps} from 'antd';
 import {Menu} from 'antd';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {useMediaQuery, useTheme} from "@mui/material";
 import {SIDEBAR_WIDTH, SIDEBAR_WIDTH_M} from "src/constant/constants";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import _ from "lodash";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -53,10 +54,18 @@ const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
 const Sidebar: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const upSm = useMediaQuery(theme.breakpoints.up('sm'))
 
-  const [openKeys, setOpenKeys] = useState(['sub1']);
+  const defaultOpenKeys = useMemo(() => {
+    const subModule = location.pathname.split('/').slice(0, 4).join('/');
+    const module = location.pathname.split('/').slice(0, 3).join('/');
+    return [module, subModule];
+  }, [location.pathname]);
+
+  const [openKeys, setOpenKeys] = useState<string[]>(defaultOpenKeys);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([defaultOpenKeys[1]]);
 
   const onOpenChange: MenuProps['onOpenChange'] = keys => {
     const latestOpenKey = keys.find(key => openKeys.indexOf(key) === -1);
@@ -68,6 +77,7 @@ const Sidebar: React.FC = () => {
   };
 
   const handleClick = useCallback<Exclude<MenuProps['onClick'], undefined>>(({ key }) => {
+    setSelectedKeys([key]);
     navigate(key);
   }, [navigate]);
 
@@ -75,7 +85,7 @@ const Sidebar: React.FC = () => {
     <Menu
       inlineCollapsed={!upSm}
       mode="inline"
-      defaultSelectedKeys={['dashboard']}
+      selectedKeys={selectedKeys}
       openKeys={openKeys}
       onOpenChange={onOpenChange}
       style={{width: upSm ? SIDEBAR_WIDTH : SIDEBAR_WIDTH_M, marginTop: '0.5px'}}

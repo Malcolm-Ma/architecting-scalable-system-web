@@ -3,7 +3,7 @@
  * @author Mingze Ma
  */
 
-import {RouteObject} from "react-router-dom";
+import {RouteObject, Navigate} from "react-router-dom";
 import React from "react";
 import {suspenseLazyComponent} from "src/util/lazyLoading";
 
@@ -18,7 +18,8 @@ const adminRoutes: RouteObject[] = [
   },
   {
     path: 'module',
-    element: suspenseLazyComponent(AdminModule),
+    element: <Navigate to="'module/list'" replace/>,
+
   },
   {
     path: 'module/list',

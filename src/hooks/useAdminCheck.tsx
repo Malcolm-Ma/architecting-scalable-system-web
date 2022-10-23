@@ -9,6 +9,7 @@ import _ from "lodash";
 import React, {useMemo} from "react";
 import Box from "@mui/material/Box";
 import {Alert, Link} from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 interface AuthCheckProps {
   children: React.ReactNode
@@ -19,10 +20,14 @@ export default function useAdminCheck() {
 
   const isAdmin = useMemo(() => {
     return user.loggedIn && !_.isEmpty(user.userInfo) && _.get(user.userInfo, 'role') === 'teacher';
-  }, [user.loggedIn, user.userInfo]);
+  }, [user]);
 
   const AuthCheck: React.FC<AuthCheckProps> = (props: AuthCheckProps) => {
     const { children } = props;
+
+    if (!user.init) {
+      return <CircularProgress />;
+    }
     if (isAdmin) {
       return <>{children}</>;
     }
