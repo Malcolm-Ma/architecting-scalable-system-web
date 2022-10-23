@@ -16,7 +16,8 @@ const apiConfig = {
   user: {
     create: '/user/add',
     update: '/user/update',
-    getAndUpdate: 'user/get_update'
+    getAndUpdate: 'user/get_update',
+    publishedCommodityList: '/user/get_merchant_commodity',
   },
   cart: {
     create: ''

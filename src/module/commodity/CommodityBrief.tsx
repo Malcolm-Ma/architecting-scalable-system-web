@@ -2,7 +2,7 @@
  * @file commodity brief
  * @author Mingze Ma
  */
-import React, {useEffect, useMemo} from "react";
+import React, {useMemo} from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import {Grid, Stack, useTheme} from "@mui/material";
@@ -23,11 +23,6 @@ const CommodityBrief: React.FC<CommodityBriefProps> = (props) => {
   const {data} = props;
 
   const theme = useTheme();
-
-  useEffect(() => {
-    console.log('--data--\n', data);
-    console.log('--theme--\n', theme);
-  }, [data]);
 
   const teacherFullName = useMemo(() => {
     if (!_.get(data, 'published_by')) {
@@ -63,8 +58,8 @@ const CommodityBrief: React.FC<CommodityBriefProps> = (props) => {
             <PriceDisplay
               price={_.get(data, 'commodity_price', 0)}
               discount={_.get(data, 'commodity_discount', 1)}
-              priceProps={{ variant: 'h3', color: '#fff' }}
-              discountProps={{ variant: 'h4' }}
+              priceProps={{variant: 'h3', color: '#fff'}}
+              discountProps={{variant: 'h4'}}
               boxStyle={{display: 'flex', alignItems: 'center', py: 0}}
             />
           </Grid>
@@ -73,7 +68,7 @@ const CommodityBrief: React.FC<CommodityBriefProps> = (props) => {
               Offered by
             </Typography>
             <Stack direction="row" spacing={2} sx={{display: 'flex', alignItems: 'center'}}>
-              <Avatar alt={teacherFullName} src={_.get(data, 'published_by.user_avatar', '#')} />
+              <Avatar alt={teacherFullName} src={_.get(data, 'published_by.user_avatar', '#')}/>
               <Typography variant="body1" color="primary.contrastText">{teacherFullName}</Typography>
             </Stack>
             <Typography color="primary.contrastText" sx={{pt: 3}}>

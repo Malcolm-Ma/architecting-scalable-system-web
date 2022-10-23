@@ -16,7 +16,7 @@ import {message} from "antd";
 import 'antd/dist/antd.css';
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "src/reducer";
-import {setRole, setUserInfo} from "src/reducer/globalReducer";
+import {setInit, setRole, setUserInfo} from "src/reducer/globalReducer";
 
 message.config({
   top: 80,
@@ -27,6 +27,7 @@ const keycloakProviderInitConfig = {
 };
 const keycloakEvent = {
   ON_AUTH_SUCCESS: "onAuthSuccess",
+  ON_READY: "onReady",
   ON_INIT_ERROR: "onInitError"
 }
 
@@ -40,6 +41,9 @@ const App: React.FC = () => {
     // If init failed, continue to load UI components
     if (event === keycloakEvent.ON_INIT_ERROR) {
       setLoadingTag(false);
+    }
+    else if (event === keycloakEvent.ON_READY) {
+      dispatch(setInit(true));
     }
     //On auth success
     else if (event === keycloakEvent.ON_AUTH_SUCCESS) {

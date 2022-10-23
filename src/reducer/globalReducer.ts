@@ -19,7 +19,7 @@ const globalSlice = createSlice({
   initialState,
   reducers: {
     setInit(state, action) {
-      state.init = action.payload.init;
+      state.init = action.payload;
     },
     setLoginStatus(state, action) {
       state.loggedIn = action.payload.status;
@@ -56,7 +56,7 @@ const globalSlice = createSlice({
       })
       .addCase(getAndUpdateUser.rejected, (state) => {
         state.userInfo = {};
-        state.init = false;
+        state.init = true;
         state.loggedIn = false;
       })
   }
