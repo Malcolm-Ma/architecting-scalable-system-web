@@ -78,7 +78,7 @@ const Sidebar: React.FC = () => {
       defaultSelectedKeys={['dashboard']}
       openKeys={openKeys}
       onOpenChange={onOpenChange}
-      style={{width: upSm ? SIDEBAR_WIDTH : SIDEBAR_WIDTH_M}}
+      style={{width: upSm ? SIDEBAR_WIDTH : SIDEBAR_WIDTH_M, marginTop: '0.5px'}}
       items={items}
       onClick={handleClick}
     />
