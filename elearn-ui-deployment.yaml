@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elearn-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elearn-ui
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: elearn-ui
+    spec:
+      containers:
+      - name: elearn-ui
+        image: gcr.io/PROJECT_ID/IMAGE:TAG
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
