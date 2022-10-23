@@ -7,7 +7,8 @@ const apiConfig = {
   commodity: {
     search: '/commodity/search_commodity',
     recommend: '/commodity/show_commodity_in_home_page',
-    detail: '/commodity/get_commodity_info'
+    detail: '/commodity/get_commodity_info',
+    create: '/commodity/create_commodity',
   },
   course: {
 
