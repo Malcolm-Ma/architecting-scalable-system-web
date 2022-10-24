@@ -41,6 +41,7 @@ const CourseCreate: React.FC = () => {
       _.set(reqBody, 'commodity_id', _.get(moduleData, 'commodity_id'));
       _.set(reqBody, 'course_sequence', _.get(moduleData, 'course_list.length', 0));
     } else {
+      console.log('--_.find(moduleList, [\'commodity_id\', curId])--\n', _.find(moduleList, ['commodity_id', curId]));
       _.set(reqBody, 'course_sequence', _.get(_.find(moduleList, ['commodity_id', curId]), 'course_list.length', 0));
     }
     if (resource) {
@@ -61,7 +62,7 @@ const CourseCreate: React.FC = () => {
       console.error(e);
       message.error(e.message);
     }
-  }, [moduleData, navigate, searchParams]);
+  }, [moduleData, moduleList, navigate, searchParams]);
 
   const getCommodityDetail = useCallback(async () => {
     try {

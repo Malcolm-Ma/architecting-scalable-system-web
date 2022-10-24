@@ -167,7 +167,6 @@ module.exports = function (webpackEnv) {
       },
     ].filter(Boolean);
     if (preProcessor) {
-      console.log('--preProcessor--\n', preProcessor);
       loaders.push(
         {
           loader: require.resolve('resolve-url-loader'),
