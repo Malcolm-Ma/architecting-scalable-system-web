@@ -11,11 +11,13 @@ import {RootState} from "src/reducer";
 import _ from "lodash";
 import {List, Space, Avatar, message} from "antd";
 import {StarOutlined, MessageOutlined} from '@ant-design/icons';
-import Box from "@mui/material/Box";
-
-import './index.less';
 import Button from "@mui/material/Button";
 import {DeleteOutlined} from "@mui/icons-material";
+import Card from "@mui/material/Card";
+
+
+import './index.less';
+import Box from "@mui/material/Box";
 
 const IconText = ({ icon, text }: { icon?: React.FC; text: string }) => (
   <Space>
@@ -28,17 +30,22 @@ const Checkout: React.FC = () => {
 
   const {userInfo}: any = useSelector<RootState>(state => state.global);
 
+  const [cartId, setCardId] = useState('');
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getCartList = useCallback(async () => {
+    setLoading(true);
     try {
-      const res = await actions.getCartList({
+      const res: any = await actions.getCartList({
         userId: userInfo.user_id
       });
-      console.log('--res--\n', res);
+      setCardId(res.cart_id);
       setData(_.get(res, 'cart_commodity', []));
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   }, [userInfo]);
 
@@ -48,10 +55,23 @@ const Checkout: React.FC = () => {
         user_id: userInfo.user_id,
         commodity_id: item.commodity_id,
       });
+      message.success('Remove successfully');
+      await getCartList();
     } catch (e: any) {
       message.error(e.message);
     }
-  }, [userInfo]);
+  }, [getCartList, userInfo.user_id]);
+
+  const handleCheckoutClick = useCallback(async () => {
+    try {
+      await actions.makePayment({
+        cart_id: cartId,
+      });
+      message.success('Payment successfully');
+    } catch (e: any) {
+      message.error(e.message);
+    }
+  }, [cartId]);
 
   useEffect(() => {
     !_.isEmpty(userInfo) && getCartList();
@@ -59,11 +79,13 @@ const Checkout: React.FC = () => {
 
   return (
     <Container maxWidth="xl" sx={{py: 4}}>
-      <Typography variant="h3">
+      <Typography variant="h2">
         One more step to enjoy your course...
       </Typography>
-      <Box sx={{py: 3}}>
+      <Card sx={{my: 3, py: 3}}>
+        <Typography sx={{pb: 2, px: 3}} variant="h3">Your shopping cart</Typography>
         <List
+          loading={loading}
           itemLayout="vertical"
           size="large"
           dataSource={data}
@@ -98,7 +120,7 @@ const Checkout: React.FC = () => {
               >
                 <List.Item.Meta
                   title={
-                    <Typography variant="h4">
+                    <Typography variant="h4" component="div">
                       <a href={`/commodity/${item.commodity_id}`}>{item.commodity_name}</a>
                     </Typography>
                   }
@@ -116,6 +138,14 @@ const Checkout: React.FC = () => {
             )
           }}
         />
+      </Card>
+      <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
+        <Button variant="contained" sx={{mr: 3, width: 150}} onClick={handleCheckoutClick}>
+          CHECK OUT
+        </Button>
+        <Button variant="outlined">
+          BACK
+        </Button>
       </Box>
     </Container>
   );

@@ -31,7 +31,8 @@ const apiConfig = {
       create: '/cart/add_commodity',
       display: 'cart/display',
       remove: '/cart/delete_commodity',
-    }
+    },
+    pay: '/pay/transaction',
   },
   upload: {
     image: '/minio/image/update',

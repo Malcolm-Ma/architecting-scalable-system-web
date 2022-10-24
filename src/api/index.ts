@@ -26,7 +26,7 @@ export class Request {
       (response) => {
         // valid response
         if (response.status === 200 || response.status === 204) {
-          // Check if the response comes from keycloak, 
+          // Check if the response comes from keycloak,
           // because keycloak response is different,don't contain status attribute
           if(!response.data.status) {
             return response.data;
@@ -71,16 +71,14 @@ export class Request {
           console.log(data);
           const {status, message: errMessage, error: err, path} = data;
           console.error(`${status} ${err}: ${errMessage}, on path:${path}`);
-          message.error(`${status}-${err}: ${errMessage}, on path:${path}`);
         } else {
           if (error.name === AxiosError.ERR_NETWORK) {
             message.error(error.message + ', please check the network');
-            return;
           }
           // No special treatment of any other error
           console.error(error.message);
-          throw error;
         }
+        return Promise.reject(error);
       }
     );
   }

@@ -11,3 +11,5 @@ export const getCartList = (params: any) => api.get(apiConfig.order.cart.display
 
 export const removeCommodityFromCart = (params: any) => api.post(apiConfig.order.cart.remove, params);
 
+export const makePayment = (params: any) => api.post(apiConfig.order.pay, params);
+
