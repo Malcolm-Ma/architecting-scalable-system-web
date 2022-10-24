@@ -3,7 +3,7 @@ import apiConfig from "src/api/apiConfig";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import _ from "lodash";
 
-interface getAndUpdateUserParams {
+export interface getAndUpdateUserParams {
   requestParams: any,
   keycloakRes: any
 }

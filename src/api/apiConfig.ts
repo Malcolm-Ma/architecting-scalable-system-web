@@ -11,17 +11,21 @@ const apiConfig = {
     create: '/commodity/create_commodity',
   },
   course: {
-
+    create: '/course/create_course',
   },
   user: {
     create: '/user/add',
     update: '/user/update',
-    getAndUpdate: 'user/get_update',
+    getAndUpdate: '/user/get_update',
     publishedCommodityList: '/user/get_merchant_commodity',
   },
   cart: {
     create: ''
-  }
+  },
+  upload: {
+    image: '/minio/image/update',
+    video: '/minio/video/upload',
+  },
 };
 
 export default apiConfig;

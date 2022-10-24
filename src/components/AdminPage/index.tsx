@@ -10,11 +10,12 @@ import Typography from "@mui/material/Typography";
 
 interface AdminPageProps extends ContainerProps {
   headerText: React.ReactNode | string | null,
+  headerContent?: React.ReactNode | null,
   headerAction?: React.ReactNode | null,
 }
 
 const AdminPage: React.FC<AdminPageProps> = (props) => {
-  const {headerText, children, headerAction, ...containerProps} = props;
+  const {headerText, headerContent, children, headerAction, ...containerProps} = props;
 
   return (
     <Container
@@ -34,6 +35,9 @@ const AdminPage: React.FC<AdminPageProps> = (props) => {
         >
           {headerText}
         </Typography>
+        {headerContent && <Box sx={{flexGrow: 2}}>
+          {headerContent}
+        </Box>}
         <Box sx={{flexGrow: 0}}>
           {headerAction}
         </Box>

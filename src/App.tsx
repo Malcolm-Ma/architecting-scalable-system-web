@@ -32,6 +32,7 @@ const keycloakEvent = {
 
 const App: React.FC = () => {
   const [loadingTag, setLoadingTag] = useState(true);
+  const [doLogin, setDoLogIn] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -39,11 +40,11 @@ const App: React.FC = () => {
     console.log("KcEventName: " + event, "Error: " + error);
     // If init failed, continue to load UI components
     if (event === keycloakEvent.ON_INIT_ERROR) {
-      dispatch(setInit(true));
       setLoadingTag(false);
     }
     //On auth success
     else if (event === keycloakEvent.ON_AUTH_SUCCESS) {
+      setDoLogIn(true);
       console.log('--keycloak.tokenParsed--\n', keycloak.tokenParsed);
       const reqBody = {
         user_username: keycloak.tokenParsed!.preferred_username,
@@ -66,6 +67,10 @@ const App: React.FC = () => {
           }
           console.log(error.response.data);
         });
+      return;
+    }
+    if (!doLogin) {
+      dispatch(setInit(true));
     }
   }
 

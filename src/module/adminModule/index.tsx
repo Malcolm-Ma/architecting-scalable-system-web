@@ -66,8 +66,8 @@ const columnConfig = (payloads: any): TableColumnsType<any> => {
     {
       dataIndex: 'course_list',
       title: 'Course Number',
-      render: (text) => (
-        <a>
+      render: (text, record) => (
+        <a href={`/teacher/course/list?module_id=${_.get(record, 'commodity_id', '')}`}>
           {_.get(text, 'length', '0')}
         </a>
       ),
