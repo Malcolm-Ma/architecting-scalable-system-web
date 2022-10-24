@@ -2,7 +2,7 @@
  * @file commodity brief
  * @author Mingze Ma
  */
-import React, {useMemo} from "react";
+import React, {useCallback, useMemo} from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import {Grid, Stack, useTheme} from "@mui/material";
@@ -14,6 +14,10 @@ import Avatar from "@mui/material/Avatar";
 import PriceDisplay from "src/components/PriceDisplay";
 import Button from "@mui/material/Button";
 import moment from "moment";
+import {useSelector} from "react-redux";
+import {RootState} from "src/reducer";
+import actions from "src/actions";
+import {message} from "antd";
 
 interface CommodityBriefProps {
   data: any,
@@ -23,6 +27,29 @@ const CommodityBrief: React.FC<CommodityBriefProps> = (props) => {
   const {data} = props;
 
   const theme = useTheme();
+  const user = useSelector((state: RootState) => state.global);
+
+  const handleAddCartClick = useCallback(async () => {
+    try {
+      await actions.addModuleToCart({
+        user_id: _.get(user, 'userInfo.user_id'),
+        commodity_id: _.get(data, 'commodity_id'),
+      });
+      message.success(`Add ${_.get(data, 'commodity_name')} to cart successfully.`)
+    } catch (e) {
+      console.error(e)
+    }
+  }, [data, user]);
+
+  const inCart = useMemo(() => {
+    if (user.loggedIn) {
+      return _.includes(
+        _.get(data, 'shopping_cart_list', []),
+        _.get(user, 'userInfo.user_shopping_cart', '')
+      );
+    }
+    return false;
+  }, [data, user]);
 
   const teacherFullName = useMemo(() => {
     if (!_.get(data, 'published_by')) {
@@ -79,9 +106,19 @@ const CommodityBrief: React.FC<CommodityBriefProps> = (props) => {
         <Button
           size="large"
           variant="contained"
-          sx={{ml: {xs: 0, sm: 2}, mt: 4, bgcolor: 'rgb(167, 131, 55)'}}
+          sx={{
+            ml: {xs: 0, sm: 2},
+            mt: 4,
+            bgcolor: 'rgb(167, 131, 55)',
+            '&:disabled': {
+              color: '#fff',
+              bgcolor: 'rgba(167, 131, 55, .8)',
+            },
+          }}
+          onClick={handleAddCartClick}
+          disabled={inCart}
         >
-          Add to Cart
+          {!inCart ? 'Add to Cart': 'Already In Cart'}
         </Button>
       </Container>
     </Box>

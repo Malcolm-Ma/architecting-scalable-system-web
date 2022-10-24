@@ -22,8 +22,10 @@ const apiConfig = {
     getAndUpdate: '/user/get_update',
     publishedCommodityList: '/user/get_merchant_commodity',
   },
-  cart: {
-    create: ''
+  order: {
+    cart: {
+      create: '/cart/add_commodity',
+    }
   },
   upload: {
     image: '/minio/image/update',
