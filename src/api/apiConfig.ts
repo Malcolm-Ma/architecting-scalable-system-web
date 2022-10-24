@@ -25,6 +25,8 @@ const apiConfig = {
   order: {
     cart: {
       create: '/cart/add_commodity',
+      display: 'cart/display',
+      remove: '/cart/delete_commodity',
     }
   },
   upload: {
