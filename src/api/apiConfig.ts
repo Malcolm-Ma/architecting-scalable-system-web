@@ -4,6 +4,9 @@
  */
 
 const apiConfig = {
+  keycloak: {
+    assignRole: ''
+  },
   commodity: {
     search: '/commodity/search_commodity',
     recommend: '/commodity/show_commodity_in_home_page',
