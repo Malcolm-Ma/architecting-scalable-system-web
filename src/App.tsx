@@ -46,6 +46,7 @@ const App: React.FC = () => {
     else if (event === keycloakEvent.ON_AUTH_SUCCESS) {
       setDoLogIn(true);
       console.log('--keycloak.tokenParsed--\n', keycloak.tokenParsed);
+      console.log('--keycloak.token--\n', keycloak.token);
       const reqBody = {
         user_username: keycloak.tokenParsed!.preferred_username,
         user_email: keycloak.tokenParsed!.email,

@@ -25,7 +25,12 @@ export class Request {
     this.axiosInstance.interceptors.response.use(
       (response) => {
         // valid response
-        if (response.status === 200) {
+        if (response.status === 200 || response.status === 204) {
+          // Check if the response comes from keycloak, 
+          // because keycloak response is different,don't contain status attribute
+          if(!response.data.status) {
+            return response.data;
+          }
           const {code, message: resMessage, data} = response.data;
           // error in business
           if (code >= 400) {

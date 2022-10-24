@@ -3,9 +3,13 @@
  * @author Mingze Ma
  */
 
+import * as kcConfig from 'src/constant/keycloakConfig';
+
 const apiConfig = {
   keycloak: {
-    assignRole: ''
+    assignRole: `/admin/realms/${kcConfig.KC_REALM_NAME}/users/`,
+    roleMappingSuffix: '/role-mappings/realm',
+    getMerchantRole: `/admin/realms/${kcConfig.KC_REALM_NAME}/roles/${kcConfig.KC_MERCHANT_ROLE}`
   },
   commodity: {
     search: '/commodity/search_commodity',

@@ -1,5 +1,6 @@
 import api from "src/api";
 import apiConfig from "src/api/apiConfig";
+import * as kcConfig from 'src/constant/keycloakConfig';
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import _ from "lodash";
 
@@ -17,7 +18,7 @@ export const getAndUpdateUser = createAsyncThunk(
   async (params: getAndUpdateUserParams) => {
     const {requestParams, keycloakRes} = params;
     const role = (() => {
-      const roleList = _.get(keycloakRes, 'resource_access.DEMO_CLIENT.roles');
+      const roleList = _.get(keycloakRes, `resource_access.${kcConfig.KC_CLIENT_ID}.roles`);
       if (_.every(roleList, (i) => _.includes(['buyer', 'merchant'], i))) {
         return 'teacher';
       }

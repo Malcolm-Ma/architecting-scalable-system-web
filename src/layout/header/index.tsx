@@ -17,16 +17,23 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import {useKeycloak} from '@react-keycloak/web'
 import _ from "lodash";
 import {Stack, useTheme} from "@mui/material";
 import CommoditySelect from "src/layout/header/CommoditySelect";
 import {useSelector} from "react-redux";
 import {RootState} from "src/reducer";
+import actions from "src/actions";
+import * as kcConfig from 'src/constant/keycloakConfig';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const SETTINGS = {
-  profile: 'Profile',
+  BE_MERCHANT: 'Be A Merchant',
   account: 'Account',
   dashboard: 'Dashboard',
   logout: 'Logout'
@@ -46,6 +53,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
   const {keycloak} = useKeycloak();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -62,7 +70,48 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
     if (setting === SETTINGS.logout) {
       keycloak.logout();
     }
+    else if (setting === SETTINGS.BE_MERCHANT) {
+      handleClickOpenDialog();
+    }
     setAnchorElUser(null);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+
+  const handleClickOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const assignMerchantRole = async () => {
+    if(keycloak.authenticated) {
+      actions.getMerchantRole()
+        .then((merchantRoleRes) => {
+          console.log(merchantRoleRes);
+          const reqBody = [merchantRoleRes];
+          console.log(reqBody);
+          actions.assignMerchantRoleToUser(keycloak.tokenParsed!.sub!, reqBody)
+            .then(() => {
+              setDialogOpen(false);
+            })
+            .catch((assignRoleError) => {
+              console.log(assignRoleError.message);
+            });
+        })
+        .catch((getMerchantError) => {
+          console.log(getMerchantError.message);
+        });
+    }
+    else {
+      setDialogOpen(false);
+      keycloak.logout();
+    }
+  };
+
+  const isMerchant = (): boolean => {
+    if (!keycloak.authenticated) return false;
+    return keycloak.tokenParsed!.resource_access![`${kcConfig.KC_CLIENT_ID}`].roles.includes('merchant');
   };
 
   return (
@@ -186,9 +235,11 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
                   onClose={handleCloseUserMenu}
                 >
                   {_.values(SETTINGS).map((setting: string) => (
-                    <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
+                    !(isMerchant() && setting === SETTINGS.BE_MERCHANT)
+                    && (
+                      <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
+                        <Typography textAlign="center">{setting}</Typography>
+                      </MenuItem>)
                   ))}
                 </Menu>
               </>
@@ -203,6 +254,32 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
           </Box>
         </Toolbar>
       </Container>
+      <Box>
+        <Dialog
+          open={dialogOpen}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirm To Be A Merchant?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Let Google help apps determine location. This means sending anonymous
+              location data to Google, even when no apps are running.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog}>
+              Cancel
+            </Button>
+            <Button onClick={assignMerchantRole} autoFocus>
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Box>
     </AppBar>
   );
 };
