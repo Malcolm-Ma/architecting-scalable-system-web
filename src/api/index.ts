@@ -6,14 +6,14 @@
 import axios, {AxiosError, AxiosInstance, AxiosRequestConfig} from "axios";
 import keycloak from "src/config/keycloak";
 import {message} from "antd";
-import {SERVICE_BASE_URL} from "src/constant/network";
+import {SERVICE_BASE_URL, KEYCLOAK_BASE_URL} from "src/constant/network";
 
 export class Request {
   private readonly axiosInstance: AxiosInstance;
 
-  public constructor() {
+  public constructor(baseUrl: string) {
     this.axiosInstance = axios.create({
-      baseURL: SERVICE_BASE_URL,
+      baseURL: baseUrl,
     });
 
     // Add request interceptors to add Authorization token
@@ -36,7 +36,7 @@ export class Request {
           return data;
         }
         // Invalid response
-        console.error('Fall to request：' + response);
+        console.error('Fall to request: ' + response);
       },
       async (error: AxiosError) => {
         if (error.response === undefined) {
@@ -97,4 +97,6 @@ export class Request {
   }
 }
 
-export default new Request();
+export default new Request(SERVICE_BASE_URL);
+
+export const keycloakApi = new Request(KEYCLOAK_BASE_URL);
