@@ -14,3 +14,5 @@ export const getCommodityDetail = (params: any) => api.get(apiConfig.commodity.d
 export const createCommodity = (params: any) => api.post(apiConfig.commodity.create, params);
 
 export const getPublishedCommodityList = (params: any) => api.get(apiConfig.user.publishedCommodityList, params);
+
+export const createReview = (params: any) => api.post(apiConfig.commodity.review.create, params);

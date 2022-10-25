@@ -51,6 +51,7 @@ const globalSlice = createSlice({
       })
       .addCase(getAndUpdateUser.fulfilled, (state, action) => {
         state.userInfo = action.payload;
+        state.userInfo['full_name'] = `${_.get(action.payload, 'user_firstname')} ${_.get(action.payload, 'user_lastname')}`
         state.loggedIn = true;
         state.init = true;
       })

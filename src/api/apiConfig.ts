@@ -16,6 +16,9 @@ const apiConfig = {
     recommend: '/commodity/show_commodity_in_home_page',
     detail: '/commodity/get_commodity_info',
     create: '/commodity/create_commodity',
+    review: {
+      create: '/review/create',
+    },
   },
   course: {
     create: '/course/create_course',

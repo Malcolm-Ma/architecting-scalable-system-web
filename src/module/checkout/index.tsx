@@ -20,7 +20,7 @@ import {useNavigate} from "react-router-dom";
 
 import './index.less';
 
-const IconText = ({ icon, text }: { icon?: React.FC; text: string }) => (
+const IconText = ({ icon, text }: { icon?: React.FC; text: string | number }) => (
   <Space>
     {icon && React.createElement(icon)}
     {text}
@@ -83,7 +83,7 @@ const Checkout: React.FC = () => {
       }, 500);
     } finally {
     }
-  }, [cartId]);
+  }, [cartId, navigate]);
 
   useEffect(() => {
     !_.isEmpty(userInfo) && getCartList();
@@ -112,7 +112,7 @@ const Checkout: React.FC = () => {
               <List.Item
                 key={item.commodity_id}
                 actions={[
-                  <IconText icon={StarOutlined} text={item.commodity_star} key="list-vertical-star-o" />,
+                  <IconText icon={StarOutlined} text={_.floor(item.commodity_star, 2)} key="list-vertical-star-o" />,
                   <IconText  text={item.commodity_sold_cnt + ' enrolled'} key="list-vertical-like-o" />,
                   <IconText icon={MessageOutlined} text={item.review_list.length} key="list-vertical-message" />,
                   <Button
@@ -160,7 +160,7 @@ const Checkout: React.FC = () => {
         >
           CHECK OUT
         </Button>
-        <Button variant="outlined">
+        <Button variant="outlined" onClick={() => navigate('/')}>
           BACK
         </Button>
       </Box>

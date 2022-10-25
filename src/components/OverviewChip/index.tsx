@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 import './index.less';
+import _ from "lodash";
 
 interface OverviewChipProps {
   star: number,
@@ -29,7 +30,7 @@ const OverviewChip: React.FC<OverviewChipProps> = (props) => {
         variant="outlined"
         icon={<StarIcon style={{color: starColor}}/>}
         label={
-          <span><b>{star}</b><Typography sx={{color: starColor}} component="span" variant="body2"> stars</Typography></span>
+          <span><b>{_.floor(star, 2)}</b><Typography sx={{color: starColor}} component="span" variant="body2"> stars</Typography></span>
         }
       />
       <Chip
