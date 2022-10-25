@@ -257,6 +257,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
                 <Button
                   variant="outlined"
                   onClick={() => keycloak.register()}
+                  color="secondary"
                 >Sign up</Button>
               </Stack>
             }

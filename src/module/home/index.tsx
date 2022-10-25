@@ -12,12 +12,15 @@ import _ from "lodash";
 import CircularProgress from "@mui/material/CircularProgress";
 import ProductCard from "src/components/ProductCard";
 import Typography from "@mui/material/Typography";
+import {Empty} from "antd";
 
 const Home: React.FC = () => {
 
   const [result, setResult] = useState<any[]>([]);
+  const [loading, setLoaidng] = useState(true);
 
   const getHomeCommodityList = useCallback(async () => {
+    setLoaidng(true);
     try {
       const res = await actions.recommendCommodity({
         limit: 12,
@@ -26,6 +29,8 @@ const Home: React.FC = () => {
       console.log('--res--\n', res);
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoaidng(false);
     }
   }, []);
 
@@ -34,30 +39,35 @@ const Home: React.FC = () => {
   }, [getHomeCommodityList]);
 
   return (
-    <Container maxWidth="xl" sx={{ bgcolor: 'grey.100', pb: 4}}>
+    <Container maxWidth="xl" sx={{bgcolor: 'grey.100', pb: 4}}>
       {
-        !_.isEmpty(result)
-          ? <>
-            <Box
-              sx={{
-                mx: '-24px',
-                bgcolor: 'background.default'
-              }}
-            >
-              <Carousel data={result.slice(0, 3)} height={480} autoplay>
-              </Carousel>
+        !loading
+          ? <>{!_.isEmpty()
+            ? <>
+              <Box
+                sx={{
+                  mx: '-24px',
+                  bgcolor: 'background.default'
+                }}
+              >
+                <Carousel data={result.slice(0, 3)} height={480} autoplay>
+                </Carousel>
+              </Box>
+              <Box
+                sx={{
+                  pt: 3,
+                }}
+              >
+                <Typography variant="h3" sx={{pb: 2}}>
+                  TOP Star Courses
+                </Typography>
+                <ProductCard data={result.slice(3)}/>
+              </Box>
+            </>
+            : <Box sx={{minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <Empty description="No modules, please contact the admin"/>
             </Box>
-            <Box
-              sx={{
-                pt: 3,
-              }}
-            >
-              <Typography variant="h3" sx={{pb: 2}}>
-                TOP Star Courses
-              </Typography>
-              <ProductCard data={result.slice(3)} />
-            </Box>
-          </>
+          }</>
           : <CircularProgress/>
       }
     </Container>
