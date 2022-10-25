@@ -33,6 +33,9 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {useNavigate} from "react-router-dom";
 import Search from "src/layout/header/Search";
 import SearchIcon from '@mui/icons-material/Search';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+import {useCallback} from "react";
+import {message} from "antd";
 
 // const pages = ['Products', 'Pricing', 'Blog'];
 const SETTINGS = {
@@ -114,6 +117,14 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
       keycloak.logout();
     }
   };
+
+  const handleCartClick = useCallback(() => {
+    if (user.loggedIn) {
+      navigate('/checkout');
+    } else {
+      message.warning('You need login to view the cart');
+    }
+  }, [navigate, user.loggedIn]);
 
   const isMerchant = (): boolean => {
     if (!keycloak.authenticated) return false;
@@ -207,10 +218,10 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
             </Box>
           </>}
 
-          <Box  sx={{display: 'flex', flexGrow: 0}} onClick={() => navigate('/checkout')}>
-            <IconButton aria-label="cart">
+          <Box  sx={{display: 'flex', flexGrow: 0}}>
+            <IconButton aria-label="cart"  onClick={handleCartClick}>
               <Badge variant="dot" color="secondary">
-                <ShoppingCartIcon />
+                {user.loggedIn ? <ShoppingCartIcon/> : <RemoveShoppingCartIcon />}
               </Badge>
             </IconButton>
             <Divider sx={{mx: {xs: 1, md: 2}}} orientation="vertical" variant="middle" flexItem />
