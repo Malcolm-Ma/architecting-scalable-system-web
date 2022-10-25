@@ -3,7 +3,7 @@
  * @author Mingze Ma
  */
 import React, {useCallback, useEffect, useState} from "react";
-import {Container} from "@mui/material";
+import {Backdrop, Container} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import actions from "src/actions";
 import {useSelector} from "react-redux";
@@ -14,10 +14,11 @@ import {StarOutlined, MessageOutlined} from '@ant-design/icons';
 import Button from "@mui/material/Button";
 import {DeleteOutlined} from "@mui/icons-material";
 import Card from "@mui/material/Card";
-
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import {useNavigate} from "react-router-dom";
 
 import './index.less';
-import Box from "@mui/material/Box";
 
 const IconText = ({ icon, text }: { icon?: React.FC; text: string }) => (
   <Space>
@@ -27,12 +28,14 @@ const IconText = ({ icon, text }: { icon?: React.FC; text: string }) => (
 );
 
 const Checkout: React.FC = () => {
-
+  const navigate = useNavigate();
   const {userInfo}: any = useSelector<RootState>(state => state.global);
 
   const [cartId, setCardId] = useState('');
   const [data, setData] = useState([]);
+
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const getCartList = useCallback(async () => {
     setLoading(true);
@@ -63,13 +66,22 @@ const Checkout: React.FC = () => {
   }, [getCartList, userInfo.user_id]);
 
   const handleCheckoutClick = useCallback(async () => {
+    setOpen(true);
     try {
       await actions.makePayment({
         cart_id: cartId,
       });
-      message.success('Payment successfully');
+      setTimeout(() => {
+        setOpen(false);
+        message.success('Payment successfully');
+        navigate('/');
+      }, 1000);
     } catch (e: any) {
-      message.error(e.message);
+      setTimeout(() => {
+        setOpen(false);
+        message.error(e.message);
+      }, 500);
+    } finally {
     }
   }, [cartId]);
 
@@ -140,13 +152,24 @@ const Checkout: React.FC = () => {
         />
       </Card>
       <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-        <Button variant="contained" sx={{mr: 3, width: 150}} onClick={handleCheckoutClick}>
+        <Button
+          variant="contained"
+          sx={{mr: 3, width: 150}}
+          onClick={handleCheckoutClick}
+          disabled={data.length === 0}
+        >
           CHECK OUT
         </Button>
         <Button variant="outlined">
           BACK
         </Button>
       </Box>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Container>
   );
 };
