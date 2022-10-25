@@ -257,7 +257,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
               : <Stack spacing={1} direction="row">
                 <Button onClick={() => keycloak.login()}>Sign in</Button>
                 <Button
-                  sx={{display: {xs: 'none'}}}
+                  sx={{display: {xs: 'none', sm: 'flex'}}}
                   variant="outlined"
                   onClick={() => keycloak.register()}
                   color="secondary"

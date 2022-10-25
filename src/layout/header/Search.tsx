@@ -8,7 +8,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 const Search: React.FC = () => {
 
-  const Search = styled('div')(({ theme }) => ({
+  const Search = styled('div')(({theme}) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.black, 0.25),
@@ -23,7 +23,7 @@ const Search: React.FC = () => {
     },
   }));
 
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
+  const SearchIconWrapper = styled('div')(({theme}) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -33,7 +33,7 @@ const Search: React.FC = () => {
     justifyContent: 'center',
   }));
 
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: theme.palette.primary.contrastText,
     '& .MuiInputBase-input': {
       padding: theme.spacing(1, 1, 1, 0),
@@ -53,11 +53,11 @@ const Search: React.FC = () => {
   return (
     <Search>
       <SearchIconWrapper>
-        <SearchIcon />
+        <SearchIcon/>
       </SearchIconWrapper>
       <StyledInputBase
         placeholder="Search…"
-        inputProps={{ 'aria-label': 'search' }}
+        inputProps={{'aria-label': 'search'}}
       />
     </Search>
   );
