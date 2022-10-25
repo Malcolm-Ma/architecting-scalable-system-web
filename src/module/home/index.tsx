@@ -34,7 +34,7 @@ const Home: React.FC = () => {
   }, [getHomeCommodityList]);
 
   return (
-    <Container maxWidth="xl" sx={{ bgcolor: 'grey.100' }}>
+    <Container maxWidth="xl" sx={{ bgcolor: 'grey.100', pb: 4}}>
       {
         !_.isEmpty(result)
           ? <>
