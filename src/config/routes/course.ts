@@ -11,7 +11,7 @@ const Course = React.lazy(() => import("src/module/course"));
 
 const courseRoutes: RouteObject[] = [
   {
-    path: 'course',
+    path: 'course/:courseId',
     element: suspenseLazyComponent(Course),
   },
 ];

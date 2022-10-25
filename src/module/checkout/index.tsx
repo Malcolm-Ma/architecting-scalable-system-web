@@ -42,8 +42,8 @@ const Checkout: React.FC = () => {
       });
       setCardId(res.cart_id);
       setData(_.get(res, 'cart_commodity', []));
-    } catch (e) {
-      console.error(e);
+    } catch (e: any) {
+      console.error(e.message || e);
     } finally {
       setLoading(false);
     }

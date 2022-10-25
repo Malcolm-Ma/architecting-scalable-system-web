@@ -72,6 +72,8 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
     }
     else if (setting === SETTINGS.BE_MERCHANT) {
       handleClickOpenDialog();
+    } else if (setting === SETTINGS.dashboard) {
+      window.open('/teacher/module/list');
     }
     setAnchorElUser(null);
   };

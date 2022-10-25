@@ -14,7 +14,7 @@ import {Alert} from "@mui/material";
 import CommodityBrief from "src/module/commodity/CommodityBrief";
 import Box from "@mui/material/Box";
 import {AppstoreOutlined, CommentOutlined} from "@ant-design/icons";
-import CourseList from "src/module/commodity/CourseList";
+import CourseList from "src/components/CourseList";
 
 const Commodity: React.FC = () => {
   const {commodityId} = useParams();
@@ -46,7 +46,7 @@ const Commodity: React.FC = () => {
       label: 'Courses',
       key: 'course',
       icon: <AppstoreOutlined />,
-      children: <CourseList moduleData={detailData} />,
+      children: <CourseList moduleData={detailData} size="normal" />,
     },
     {
       label: 'User Comments',

@@ -43,13 +43,14 @@ const ModuleCreate: React.FC = () => {
     }
     console.log('--reqBody--\n', reqBody);
     try {
-      const res = await actions.createCommodity(reqBody);
-      console.log('--res--\n', res);
+      await actions.createCommodity(reqBody);
+      message.success('Create module successfully');
+      navigate('/teacher/module/list');
     } catch (e: any) {
       console.error(e);
       message.error(e.message);
     }
-  }, [userInfo]);
+  }, [navigate, userInfo]);
 
   return (
     <AdminPage

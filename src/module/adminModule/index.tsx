@@ -102,7 +102,6 @@ const AdminModule: React.FC = () => {
         userId: _.get(userInfo, 'user_id'),
       });
       setListData(res);
-      console.log('--res--\n', res);
     } catch (e: any) {
       console.error(e);
       setListData([]);

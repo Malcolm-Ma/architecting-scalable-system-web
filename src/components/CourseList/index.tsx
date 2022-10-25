@@ -4,20 +4,27 @@
  */
 import React, {useMemo} from "react";
 import Container from "@mui/material/Container";
-import {List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
+import {List, ListItem, ListItemIcon, ListItemText, ListItemProps, SxProps} from "@mui/material";
 import _ from "lodash";
 import DuoIcon from '@mui/icons-material/Duo';
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
+import {useNavigate} from "react-router-dom";
 // import PlayDisabledOutlinedIcon from '@mui/icons-material/PlayDisabledOutlined';
 
 interface CourseListProps {
+  size: 'inline' | 'normal',
   moduleData: any,
+  listItemProps?: ListItemProps,
+  listItemSx?: SxProps,
 }
 
-const CourseList: React.FC<CourseListProps> = (props) => {
-  const {moduleData} = props;
+const Index: React.FC<CourseListProps> = (props) => {
+  const {moduleData, size = 'normal', listItemSx, listItemProps} = props;
+  const normalSize = size === 'normal';
+
+  const navigate = useNavigate()
 
   const courseList = useMemo(() => {
     const original = _.get(moduleData, 'course_list', []);
@@ -25,20 +32,24 @@ const CourseList: React.FC<CourseListProps> = (props) => {
   }, [moduleData]);
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth={normalSize ? 'md' : 'sm'}>
       <List>
         {_.map(courseList, (course: any, index) => {
           console.log('--course--\n', course);
           return (
             <ListItem
               key={index}
-              sx={{py: { xs: 2, sm: 3 }}}
+              sx={{
+                ...(normalSize && {py: { xs: 2, sm: 3}}),
+                ...listItemSx
+              }}
               secondaryAction={
-                <IconButton edge="end">
+                <IconButton edge="end" onClick={() => navigate(`/course/${course.course_id}`)}>
                   <SmartDisplayOutlinedIcon />
                   {/*<PlayDisabledOutlinedIcon />*/}
                 </IconButton>
               }
+              {...listItemProps}
             >
               <ListItemIcon>
                 <DuoIcon/>
@@ -54,4 +65,4 @@ const CourseList: React.FC<CourseListProps> = (props) => {
   );
 };
 
-export default CourseList;
+export default Index;

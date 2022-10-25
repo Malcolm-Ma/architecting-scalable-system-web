@@ -78,7 +78,7 @@ export class Request {
           // No special treatment of any other error
           console.error(error.message);
         }
-        return Promise.reject(error);
+        return Promise.reject(error.response.data);
       }
     );
   }
