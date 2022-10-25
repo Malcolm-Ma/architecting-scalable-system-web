@@ -4,6 +4,7 @@
  */
 
 import * as kcConfig from 'src/constant/keycloakConfig';
+import {SERVICE_BASE_URL} from 'src/constant/network';
 
 const apiConfig = {
   keycloak: {
@@ -42,6 +43,9 @@ const apiConfig = {
     image: '/minio/image/update',
     video: '/minio/video/upload',
   },
+  video: {
+    show: `${SERVICE_BASE_URL}/minio/video/show`
+  }
 };
 
 export default apiConfig;
