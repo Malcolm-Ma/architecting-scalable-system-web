@@ -9,6 +9,8 @@ import {suspenseLazyComponent} from "src/util/lazyLoading";
 
 const Home = React.lazy(() => import('src/module/home'));
 const Checkout = React.lazy(() => import('src/module/checkout'));
+const Search = React.lazy(() => import('src/module/search'));
+
 
 const homeRoutes: RouteObject[] = [
   {
@@ -22,7 +24,11 @@ const homeRoutes: RouteObject[] = [
   {
     path: 'checkout',
     element: suspenseLazyComponent(Checkout),
-  }
+  },
+  {
+    path: 'search',
+    element: suspenseLazyComponent(Search),
+  },
 ];
 
 export default homeRoutes;

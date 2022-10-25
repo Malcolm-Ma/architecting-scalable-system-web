@@ -44,8 +44,8 @@ const CommodityBrief: React.FC<CommodityBriefProps> = (props) => {
   const inCart = useMemo(() => {
     if (user.loggedIn) {
       return _.includes(
-        _.get(data, 'shopping_cart_list', []),
-        _.get(user, 'userInfo.user_shopping_cart', '')
+        _.map(_.get(user, 'userInfo.user_shopping_cart.cart_commodity', []), 'commodity_id'),
+        _.get(data, 'commodity_id', '')
       );
     }
     return false;

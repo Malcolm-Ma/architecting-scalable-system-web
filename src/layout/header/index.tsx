@@ -10,7 +10,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
+// import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -24,7 +24,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useKeycloak} from '@react-keycloak/web'
 import _ from "lodash";
-import {Badge, Divider, Stack, useTheme} from "@mui/material";
+import {Badge, Divider, Popover, Stack, useTheme} from "@mui/material";
 import {useSelector} from "react-redux";
 import {RootState} from "src/reducer";
 import actions from "src/actions";
@@ -32,9 +32,9 @@ import * as kcConfig from 'src/constant/keycloakConfig';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {useNavigate} from "react-router-dom";
 import Search from "src/layout/header/Search";
+import SearchIcon from '@mui/icons-material/Search';
 
-
-const pages = ['Products', 'Pricing', 'Blog'];
+// const pages = ['Products', 'Pricing', 'Blog'];
 const SETTINGS = {
   BE_MERCHANT: 'Be A Merchant',
   account: 'Account',
@@ -152,32 +152,28 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
               >
-                <MenuIcon/>
+                <SearchIcon />
               </IconButton>
-              <Menu
-                id="menu-appbar"
+              <Popover
+                disableScrollLock={true}
+                open={Boolean(anchorElNav)}
                 anchorEl={anchorElNav}
+                onClose={handleCloseNavMenu}
                 anchorOrigin={{
                   vertical: 'bottom',
                   horizontal: 'left',
                 }}
-                keepMounted
                 transformOrigin={{
                   vertical: 'top',
                   horizontal: 'left',
                 }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
+                keepMounted
                 sx={{
                   display: {xs: 'block', md: 'none'},
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography variant="h5" textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
+                <Search />
+              </Popover>
             </Box>
             <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1, color: theme.palette.primary.main}}/>
             <Typography
