@@ -8,6 +8,7 @@ import _ from "lodash";
 import Typography from "@mui/material/Typography";
 import PriceDisplay from "src/components/PriceDisplay";
 import OverviewChip from "src/components/OverviewChip";
+import {useTheme} from "@mui/material";
 
 interface CarouselCardProps {
   content: object,
@@ -17,6 +18,8 @@ interface CarouselCardProps {
 
 export default function CarouselCard(props: CarouselCardProps) {
   const {content, height, onClick} = props;
+
+  const theme = useTheme()
 
   const imageContainerSx = useMemo(() => ({
     backgroundImage: `url(${_.replace(_.get(content, 'commodity_cover'), ' ', '%20')})`,
@@ -53,6 +56,10 @@ export default function CarouselCard(props: CarouselCardProps) {
           display: 'flex',
           justifyContent: 'center',
           flexDirection: 'column',
+          [theme.breakpoints.down('sm')]: {
+            width: '100%',
+            backgroundColor: 'rgba(0,0,0,.5)',
+          }
         }}
       >
         <Typography variant="h3" sx={{color: 'inherit', py: 2}}>

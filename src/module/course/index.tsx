@@ -71,7 +71,7 @@ const Course: React.FC = () => {
           </Typography>
           <Grid container spacing={2} rowSpacing={3}>
             <Grid item sm={12} md={8} xl={10}>
-              <VideoPlayer/>
+              <VideoPlayer src={detail?.course.course_resource}/>
             </Grid>
             <Grid item xs={12} sm={6} md={4} xl={2}>
               <Card sx={{height: '100%', py: 2}}>

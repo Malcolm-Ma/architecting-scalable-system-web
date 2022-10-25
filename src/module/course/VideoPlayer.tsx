@@ -5,15 +5,21 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Player from 'griffith'
+import apiConfig from "src/api/apiConfig";
+import _ from "lodash";
 
-const VideoPlayer: React.FC = () => {
+interface VideoPlayerProps {
+  src: string,
+}
 
+const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
+  const {src} = props;
+
+  console.log(`${apiConfig.video.show}?videoName=${_.get(_.split(src, '/'), '1')}`)
   return (
     <Box>
       <Player
-        // url={`http://localhost:8090/minio/video/show?videoName=6cf802a706ea4aae9321a83100332af4.mp4`}
-        sources={{sd: {play_url: `http://localhost:8090/api/minio/video/show?videoName=760358628aae4b58bb718c96e7b1f9df.mp4`}}}
-        // sources={{sd: {play_url: `https://zhstatic.zhihu.com/cfe/griffith/zhihu2018_hd.mp4`}}}
+        sources={{sd: {play_url: `${apiConfig.video.show}?videoName=${_.get(_.split(src, '/'), '1')}`}}}
         id="player"
       />
     </Box>
