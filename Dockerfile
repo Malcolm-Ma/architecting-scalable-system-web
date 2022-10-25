@@ -1,7 +1,5 @@
 FROM node:16 AS Builder
 
-ENV NPM_CONFIG_LOGLEVEL info
-
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
@@ -17,3 +15,7 @@ COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=Builder /usr/src/app/build /usr/share/nginx/html
+
+EXPOSE 3010 80
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
