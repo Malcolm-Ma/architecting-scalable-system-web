@@ -59,6 +59,16 @@ const CommodityBrief: React.FC<CommodityBriefProps> = (props) => {
     return `${_.get(data, 'published_by.user_firstname', '')} ${_.get(data, 'published_by.user_lastname', '')}`
   }, [data]);
 
+  const isPurchased = useMemo(() => {
+    const transactionList = _.get(user.userInfo, 'transaction_list', []);
+    let result: any[] = [];
+    _.map(transactionList, (transaction) => {
+      result.push(_.map(_.get(transaction, 'commodity_list', []), 'commodity_id'));
+    });
+    result = _.flatten(result);
+    return _.includes(result, data.commodity_id);
+  }, [data, user.userInfo]);
+
   return (
     <Box
       sx={{
@@ -90,22 +100,27 @@ const CommodityBrief: React.FC<CommodityBriefProps> = (props) => {
               discountProps={{variant: 'h4'}}
               boxStyle={{display: 'flex', alignItems: 'center', pb: 0, pt: 2}}
             />
-            <Button
-              size="large"
-              variant="contained"
-              sx={{
-                mt: {xs: 4, sm: 6},
-                bgcolor: 'rgb(167, 131, 55)',
-                '&:disabled': {
-                  color: '#fff',
-                  bgcolor: 'rgba(167, 131, 55, .8)',
-                },
-              }}
-              onClick={handleAddCartClick}
-              disabled={inCart}
-            >
-              {!inCart ? 'Add to Cart' : 'Already In Cart'}
-            </Button>
+            {!isPurchased
+              ? <Button
+                size="large"
+                variant="contained"
+                sx={{
+                  mt: {xs: 4, sm: 6},
+                  bgcolor: 'rgb(167, 131, 55)',
+                  '&:disabled': {
+                    color: '#fff',
+                    bgcolor: 'rgba(167, 131, 55, .8)',
+                  },
+                }}
+                onClick={handleAddCartClick}
+                disabled={inCart}
+              >
+                {!inCart ? 'Add to Cart' : 'Already In Cart'}
+              </Button>
+              : <Typography variant="h5" sx={{color: '#fff', mt: {xs: 4, sm: 6}, fontWeight: 'bold'}}>
+                You have purchased this module
+              </Typography>
+            }
           </Grid>
           <Grid item xs={12} sm={6} sx={{px: {xs: 0, sm: 6}}}>
             <Box
