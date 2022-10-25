@@ -131,6 +131,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
             component="a"
             href="/"
             sx={{
+              flexGrow: 1,
               mr: 2,
               display: {xs: 'none', md: 'flex'},
               fontFamily: 'monospace',
