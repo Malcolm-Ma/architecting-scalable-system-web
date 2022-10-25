@@ -38,11 +38,9 @@ const Index: React.FC<CourseListProps> = (props) => {
     <Container maxWidth={normalSize ? 'md' : 'sm'}>
       <List>
         {_.map(courseList, (course: any, index) => {
-          console.log('--course--\n', course);
           return (
-            <>
+            <React.Fragment key={index}>
               <ListItem
-                key={index}
                 sx={{
                   ...(normalSize && {py: {xs: 2, sm: 3}}),
                   ...listItemSx
@@ -71,7 +69,7 @@ const Index: React.FC<CourseListProps> = (props) => {
                 />
               </ListItem>
               {(divider && index + 1 < courseList.length) && <Divider component="li"/>}
-            </>
+            </React.Fragment>
           );
         })}
       </List>

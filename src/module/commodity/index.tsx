@@ -15,6 +15,7 @@ import CommodityBrief from "src/module/commodity/CommodityBrief";
 import Box from "@mui/material/Box";
 import {AppstoreOutlined, CommentOutlined} from "@ant-design/icons";
 import CourseList from "src/components/CourseList";
+import CommentView from "src/components/CommentView";
 
 const Commodity: React.FC = () => {
   const {commodityId} = useParams();
@@ -52,7 +53,7 @@ const Commodity: React.FC = () => {
       label: 'User Comments',
       key: 'review',
       icon: <CommentOutlined />,
-      children: '',
+      children: <CommentView moduleData={detailData} />,
     },
   ]), [detailData]);
 

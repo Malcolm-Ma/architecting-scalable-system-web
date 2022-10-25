@@ -15,6 +15,7 @@ import {CardContent, Grid, Stack} from "@mui/material";
 import CourseList from "src/components/CourseList";
 import Card from "@mui/material/Card";
 import Avatar from "@mui/material/Avatar";
+import CommentView from "src/components/CommentView";
 
 const Course: React.FC = () => {
   const param = useParams();
@@ -68,7 +69,7 @@ const Course: React.FC = () => {
           <Typography sx={{pt: 1, pb: 3}} variant="h2">
             {displayTitle}
           </Typography>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} rowSpacing={3}>
             <Grid item sm={12} md={8} xl={10}>
               <VideoPlayer/>
             </Grid>
@@ -86,7 +87,12 @@ const Course: React.FC = () => {
               </Card>
             </Grid>
             <Grid item xs={12} sm={9}>
-              <Card></Card>
+              <Card sx={{pb: 2}}>
+                <Typography variant="h4" sx={{p: 3, pb: 2}}>
+                  Comments
+                </Typography>
+                <CommentView moduleData={detail?.commodity} summary={false} />
+              </Card>
             </Grid>
             <Grid item xs={12} sm={3}>
               <Card>

@@ -102,7 +102,7 @@ const Checkout: React.FC = () => {
                 actions={[
                   <IconText icon={StarOutlined} text={item.commodity_star} key="list-vertical-star-o" />,
                   <IconText  text={item.commodity_sold_cnt + ' enrolled'} key="list-vertical-like-o" />,
-                  <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+                  <IconText icon={MessageOutlined} text={item.review_list.length} key="list-vertical-message" />,
                   <Button
                     size="small"
                     startIcon={<DeleteOutlined />}
