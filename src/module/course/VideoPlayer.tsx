@@ -4,8 +4,6 @@
  */
 import React from "react";
 import Box from "@mui/material/Box";
-// import {Player} from 'video-react';
-// import ReactPlayer from 'react-player'
 import Player from 'griffith'
 
 const VideoPlayer: React.FC = () => {
@@ -14,7 +12,7 @@ const VideoPlayer: React.FC = () => {
     <Box>
       <Player
         // url={`http://localhost:8090/minio/video/show?videoName=6cf802a706ea4aae9321a83100332af4.mp4`}
-        sources={{sd: {play_url: `http://localhost:8090/minio/video/show?videoName=5a964f29b1db404abd5c806c90b93b54.mp4`}}}
+        sources={{sd: {play_url: `http://localhost:8090/api/minio/video/show?videoName=760358628aae4b58bb718c96e7b1f9df.mp4`}}}
         // sources={{sd: {play_url: `https://zhstatic.zhihu.com/cfe/griffith/zhihu2018_hd.mp4`}}}
         id="player"
       />

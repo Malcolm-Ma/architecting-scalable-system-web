@@ -19,6 +19,7 @@ const apiConfig = {
   },
   course: {
     create: '/course/create_course',
+    info: '/course/get_course_info',
   },
   user: {
     create: '/user/add',

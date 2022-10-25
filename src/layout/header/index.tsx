@@ -24,12 +24,14 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useKeycloak} from '@react-keycloak/web'
 import _ from "lodash";
-import {Stack, useTheme} from "@mui/material";
-import CommoditySelect from "src/layout/header/CommoditySelect";
+import {Badge, Divider, Stack, useTheme} from "@mui/material";
 import {useSelector} from "react-redux";
 import {RootState} from "src/reducer";
 import actions from "src/actions";
 import * as kcConfig from 'src/constant/keycloakConfig';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import {useNavigate} from "react-router-dom";
+
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const SETTINGS = {
@@ -47,6 +49,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
   const {isAdmin = false} = props;
 
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const user = useSelector((state: RootState) => state.global);
 
@@ -204,11 +207,15 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
               ))}
             </Box>
           </>}
-          {isAdmin && <>
-            <Box sx={{flexGrow: 1, display: 'flex'}}>
-              <CommoditySelect/>
-            </Box>
-          </>}
+
+          <Box  sx={{display: 'flex', flexGrow: 0}} onClick={() => navigate('/checkout')}>
+            <IconButton aria-label="cart">
+              <Badge variant="dot" color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+            <Divider sx={{mx: 2}} orientation="vertical" variant="middle" flexItem />
+          </Box>
 
           <Box sx={{flexGrow: 0}}>
             {keycloak.authenticated
