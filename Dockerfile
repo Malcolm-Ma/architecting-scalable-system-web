@@ -1,7 +1,9 @@
-FROM node:16 AS Builder
+FROM node:16 AS build
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+# RUN mkdir -p /usr/src/app
+# WORKDIR /usr/src/app
+
+WORKDIR /app
 
 COPY . .
 
@@ -9,13 +11,14 @@ ARG GENERATE_SOURCEMAP=false
 
 RUN npm install && npm run build
 
-FROM nginx:1.13.3-alpine
+FROM nginx:stable-alpine
 
-COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
-RUN rm -rf /usr/share/nginx/html/*
-COPY --from=Builder /usr/src/app/build /usr/share/nginx/html
+# COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 3010 80
+# RUN rm -rf /usr/share/nginx/html/*
+# COPY --from=Builder /usr/src/app/build /usr/share/nginx/html
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
