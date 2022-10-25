@@ -59,14 +59,13 @@ const App: React.FC = () => {
         user_enabled: true
       };
       dispatch(actions.getAndUpdateUser({requestParams: reqBody, keycloakRes: keycloak.tokenParsed})).unwrap()
-        .catch((error) => {
-          if (error.response.data.status === 404) {
+        .catch((err) => {
+          if (err.message === "User doesn't exist.") {
             actions.createNewUser(reqBody).then((res) => {
               dispatch(setUserInfo(res));
               dispatch(setRole(keycloak.tokenParsed));
             });
           }
-          console.log(error.response.data);
         });
       return;
     }

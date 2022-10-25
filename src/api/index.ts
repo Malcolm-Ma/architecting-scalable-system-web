@@ -25,6 +25,7 @@ export class Request {
     this.axiosInstance.interceptors.response.use(
       (response) => {
         // valid response
+        console.log(response);
         if (response.status === 200 || response.status === 204) {
           // Check if the response comes from keycloak,
           // because keycloak response is different,don't contain status attribute
@@ -43,7 +44,7 @@ export class Request {
         // Invalid response
         console.error('Fall to request: ' + response);
       },
-      async (error: AxiosError) => {
+      async (error: any) => {
         if (error.response === undefined) {
           throw error;
         }
@@ -76,8 +77,9 @@ export class Request {
             message.error(error.message + ', please check the network');
           }
           // No special treatment of any other error
-          console.error(error.message);
+          console.error(error.response.data);
         }
+        console.log(error.response.data);
         return Promise.reject(error.response.data);
       }
     );
