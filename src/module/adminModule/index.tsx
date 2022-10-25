@@ -77,7 +77,7 @@ const columnConfig = (payloads: any): TableColumnsType<any> => {
       title: 'Cover Image',
       render: (text) => (
         <IconButton onClick={() => window.open(_.replace(text, ' ', '%20'))}>
-          <ImageIcon/>
+          <ImageIcon sx={{color: 'primary.main'}}/>
         </IconButton>
       ),
     },

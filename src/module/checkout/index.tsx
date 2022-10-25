@@ -78,7 +78,7 @@ const Checkout: React.FC = () => {
   }, [getCartList, userInfo]);
 
   return (
-    <Container maxWidth="xl" sx={{py: 4}}>
+    <Container maxWidth="lg" sx={{py: 4}}>
       <Typography variant="h2">
         One more step to enjoy your course...
       </Typography>
@@ -101,7 +101,7 @@ const Checkout: React.FC = () => {
                 key={item.commodity_id}
                 actions={[
                   <IconText icon={StarOutlined} text={item.commodity_star} key="list-vertical-star-o" />,
-                  <IconText  text={item.commodity_star + ' enrolled'} key="list-vertical-like-o" />,
+                  <IconText  text={item.commodity_sold_cnt + ' enrolled'} key="list-vertical-like-o" />,
                   <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
                   <Button
                     size="small"
