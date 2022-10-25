@@ -31,6 +31,7 @@ import actions from "src/actions";
 import * as kcConfig from 'src/constant/keycloakConfig';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {useNavigate} from "react-router-dom";
+import Search from "src/layout/header/Search";
 
 
 const pages = ['Products', 'Pricing', 'Blog'];
@@ -196,15 +197,16 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
               E-Learn
             </Typography>
             <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{my: 2, display: 'block'}}
-                >
-                  <Typography variant="subtitle1" fontWeight="bold">{page}</Typography>
-                </Button>
-              ))}
+              <Search />
+              {/*{pages.map((page) => (*/}
+              {/*  <Button*/}
+              {/*    key={page}*/}
+              {/*    onClick={handleCloseNavMenu}*/}
+              {/*    sx={{my: 2, display: 'block'}}*/}
+              {/*  >*/}
+              {/*    <Typography variant="subtitle1" fontWeight="bold">{page}</Typography>*/}
+              {/*  </Button>*/}
+              {/*))}*/}
             </Box>
           </>}
 
@@ -214,7 +216,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
-            <Divider sx={{mx: 2}} orientation="vertical" variant="middle" flexItem />
+            <Divider sx={{mx: {xs: 1, md: 2}}} orientation="vertical" variant="middle" flexItem />
           </Box>
 
           <Box sx={{flexGrow: 0}}>
@@ -253,8 +255,9 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
                 </Menu>
               </>
               : <Stack spacing={1} direction="row">
-                <Button size="large" onClick={() => keycloak.login()}>Sign in</Button>
+                <Button onClick={() => keycloak.login()}>Sign in</Button>
                 <Button
+                  sx={{display: {xs: 'none'}}}
                   variant="outlined"
                   onClick={() => keycloak.register()}
                   color="secondary"

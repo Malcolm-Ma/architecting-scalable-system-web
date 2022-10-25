@@ -26,7 +26,6 @@ const Home: React.FC = () => {
         limit: 12,
       });
       setResult(res as any);
-      console.log('--res--\n', res);
     } catch (e) {
       console.error(e);
     } finally {
@@ -42,7 +41,7 @@ const Home: React.FC = () => {
     <Container maxWidth="xl" sx={{bgcolor: 'grey.100', pb: 4}}>
       {
         !loading
-          ? <>{!_.isEmpty()
+          ? <>{!_.isEmpty(result)
             ? <>
               <Box
                 sx={{
