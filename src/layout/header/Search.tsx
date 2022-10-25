@@ -5,7 +5,6 @@
 import React, {useCallback, useState} from "react";
 import {alpha, Button, InputBase, styled} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-import {useNavigate} from "react-router-dom";
 import _ from "lodash";
 import qs from 'query-string';
 
@@ -53,14 +52,13 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 const SearchBar: React.FC = () => {
-  const navigate = useNavigate();
 
   const [value, setValue] = useState('');
   const [focus, setFocus] = useState(false);
 
   const handleRedirect = useCallback(() => {
-    navigate('/search?' + qs.stringify({keyword: value}));
-  }, [navigate, value]);
+    window.location.href = '/search?' + qs.stringify({keyword: value});
+  }, [value]);
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)
@@ -71,18 +69,6 @@ const SearchBar: React.FC = () => {
       handleRedirect();
     }
   }, [handleRedirect]);
-
-  // @ts-ignore
-  // const searchCommodity = useCallback(async () => {
-  //   try {
-  //     const res = await actions.searchCommodity({
-  //       keyword: '',
-  //     });
-  //     console.log('--res--\n', res);
-  //   } catch (e) {
-  //     console.error(e)
-  //   }
-  // }, []);
 
   return (
     <Search
