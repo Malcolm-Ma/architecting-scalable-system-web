@@ -10,13 +10,11 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-// import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -36,6 +34,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import {useCallback} from "react";
 import {message} from "antd";
+import Logo from 'src/assets/logo.jpg';
 
 // const pages = ['Products', 'Pricing', 'Blog'];
 const SETTINGS = {
@@ -135,24 +134,23 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
     <AppBar position="fixed" sx={{bgcolor: theme.palette.background.default}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1, color: theme.palette.primary.main}}/>
-          <Typography
-            variant="h3"
-            noWrap
-            component="a"
-            href="/"
+          <Box
             sx={{
               flexGrow: 1,
-              mr: 2,
               display: {xs: 'none', md: 'flex'},
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              textDecoration: 'none',
             }}
           >
-            E-Learn
-          </Typography>
+            <Box
+              sx={{
+                width: '128px',
+                height: '40px',
+                backgroundImage: `url(${Logo})`,
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+              }}
+            />
+          </Box>
 
           {!isAdmin && <>
             <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
@@ -186,24 +184,23 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
                 <Search />
               </Popover>
             </Box>
-            <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1, color: theme.palette.primary.main}}/>
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href=""
+            <Box
               sx={{
-                mr: 2,
-                display: {xs: 'flex', md: 'none'},
                 flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                textDecoration: 'none',
+                display: {xs: 'flex', md: 'none'},
               }}
             >
-              E-Learn
-            </Typography>
+              <Box
+                sx={{
+                  width: '96px',
+                  height: '24px',
+                  backgroundImage: `url(${Logo})`,
+                  backgroundSize: 'cover',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                }}
+              />
+            </Box>
             <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
               <Search />
               {/*{pages.map((page) => (*/}
