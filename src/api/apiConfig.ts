@@ -12,6 +12,7 @@ const apiConfig = {
     roleMappingSuffix: '/role-mappings/realm',
     getMerchantRole: `/admin/realms/${kcConfig.KC_REALM_NAME}/roles/${kcConfig.KC_MERCHANT_ROLE}`
   },
+  search: '/search/commodity',
   commodity: {
     search: '/commodity/search_commodity',
     recommend: '/commodity/show_commodity_in_home_page',

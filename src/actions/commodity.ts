@@ -2,8 +2,11 @@
  * @file commodity actions
  * @author Mingze Ma
  */
-import api from "src/api";
+// @ts-ignore
+import api, {searchApi} from "src/api";
 import apiConfig from "src/api/apiConfig";
+
+// export const searchCommodity = (params: any) => searchApi.post(apiConfig.search, params);
 
 export const searchCommodity = (params: any) => api.post(apiConfig.commodity.search, params);
 

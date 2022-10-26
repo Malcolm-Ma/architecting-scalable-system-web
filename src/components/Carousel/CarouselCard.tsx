@@ -42,7 +42,10 @@ export default function CarouselCard(props: CarouselCardProps) {
         width: '100%',
         height: height + 'px',
         position: 'relative',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        [theme.breakpoints.down('sm')]: {
+          height: `calc(${height}px - 200px)`,
+        }
       }}
       onClick={onClick}
     >

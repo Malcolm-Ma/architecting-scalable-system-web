@@ -6,7 +6,7 @@
 import axios, {AxiosError, AxiosInstance, AxiosRequestConfig} from "axios";
 import keycloak from "src/config/keycloak";
 import {message} from "antd";
-import {SERVICE_BASE_URL, KEYCLOAK_BASE_URL} from "src/constant/network";
+import {SERVICE_BASE_URL, KEYCLOAK_BASE_URL, SERVICE_SEARCH_URL} from "src/constant/network";
 
 export class Request {
   private readonly axiosInstance: AxiosInstance;
@@ -105,3 +105,5 @@ export class Request {
 export default new Request(SERVICE_BASE_URL);
 
 export const keycloakApi = new Request(KEYCLOAK_BASE_URL);
+
+export const searchApi = new Request(SERVICE_SEARCH_URL);

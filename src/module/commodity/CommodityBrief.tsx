@@ -35,7 +35,8 @@ const CommodityBrief: React.FC<CommodityBriefProps> = (props) => {
         user_id: _.get(user, 'userInfo.user_id'),
         commodity_id: _.get(data, 'commodity_id'),
       });
-      message.success(`Add ${_.get(data, 'commodity_name')} to cart successfully.`)
+      message.success(`Add ${_.get(data, 'commodity_name')} to cart successfully.`);
+      setTimeout(() => window.location.reload(), 1000);
     } catch (e) {
       console.error(e)
     }
@@ -44,8 +45,8 @@ const CommodityBrief: React.FC<CommodityBriefProps> = (props) => {
   const inCart = useMemo(() => {
     if (user.loggedIn) {
       return _.includes(
-        _.get(data, 'shopping_cart_list', []),
-        _.get(user, 'userInfo.user_shopping_cart', '')
+        _.map(_.get(user, 'userInfo.user_shopping_cart.cart_commodity', []), 'commodity_id'),
+        _.get(data, 'commodity_id', '')
       );
     }
     return false;
@@ -57,6 +58,16 @@ const CommodityBrief: React.FC<CommodityBriefProps> = (props) => {
     }
     return `${_.get(data, 'published_by.user_firstname', '')} ${_.get(data, 'published_by.user_lastname', '')}`
   }, [data]);
+
+  const isPurchased = useMemo(() => {
+    const transactionList = _.get(user.userInfo, 'transaction_list', []);
+    let result: any[] = [];
+    _.map(transactionList, (transaction) => {
+      result.push(_.map(_.get(transaction, 'commodity_list', []), 'commodity_id'));
+    });
+    result = _.flatten(result);
+    return _.includes(result, data.commodity_id);
+  }, [data, user.userInfo]);
 
   return (
     <Box
@@ -87,10 +98,43 @@ const CommodityBrief: React.FC<CommodityBriefProps> = (props) => {
               discount={_.get(data, 'commodity_discount', 1)}
               priceProps={{variant: 'h3', color: '#fff'}}
               discountProps={{variant: 'h4'}}
-              boxStyle={{display: 'flex', alignItems: 'center', py: 0}}
+              boxStyle={{display: 'flex', alignItems: 'center', pb: 0, pt: 2}}
             />
+            {!isPurchased
+              ? <Button
+                size="large"
+                variant="contained"
+                sx={{
+                  mt: {xs: 4, sm: 6},
+                  bgcolor: 'rgb(167, 131, 55)',
+                  '&:disabled': {
+                    color: '#fff',
+                    bgcolor: 'rgba(167, 131, 55, .8)',
+                  },
+                }}
+                onClick={handleAddCartClick}
+                disabled={inCart}
+              >
+                {!inCart ? 'Add to Cart' : 'Already In Cart'}
+              </Button>
+              : <Typography variant="h5" sx={{color: '#fff', mt: {xs: 4, sm: 6}, fontWeight: 'bold'}}>
+                You have purchased this module
+              </Typography>
+            }
           </Grid>
           <Grid item xs={12} sm={6} sx={{px: {xs: 0, sm: 6}}}>
+            <Box
+              sx={{
+                backgroundImage: `url(${_.get(data, 'commodity_cover')})`,
+                backgroundSize: 'contain',
+                backgroundPosition: 'left',
+                backgroundRepeat: 'no-repeat',
+                height: theme.spacing(20),
+                margin: 'auto',
+                mb: 2,
+                mt: {xs: 2, sm: 0}
+              }}
+            ></Box>
             <Typography variant="h4" color="primary.contrastText" sx={{pb: 2, pt: {xs: 2, sm: 0}}}>
               Offered by
             </Typography>
@@ -103,23 +147,6 @@ const CommodityBrief: React.FC<CommodityBriefProps> = (props) => {
             </Typography>
           </Grid>
         </Grid>
-        <Button
-          size="large"
-          variant="contained"
-          sx={{
-            ml: {xs: 0, sm: 2},
-            mt: 4,
-            bgcolor: 'rgb(167, 131, 55)',
-            '&:disabled': {
-              color: '#fff',
-              bgcolor: 'rgba(167, 131, 55, .8)',
-            },
-          }}
-          onClick={handleAddCartClick}
-          disabled={inCart}
-        >
-          {!inCart ? 'Add to Cart': 'Already In Cart'}
-        </Button>
       </Container>
     </Box>
   );

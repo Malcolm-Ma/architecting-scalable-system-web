@@ -112,7 +112,10 @@ const AdminCourse: React.FC = () => {
                   selectedModule
                     ? <>{!noCourse
                       ? <>
-                        <AdminCourseList listData={_.get(selectedModule, 'course_list', [])} />
+                        <AdminCourseList
+                          listData={_.get(selectedModule, 'course_list', [])}
+                          commodityId={_.get(selectedModule, 'commodity_id', '')}
+                        />
                       </>
                       : <Box sx={{py: 4}}>
                         <Empty

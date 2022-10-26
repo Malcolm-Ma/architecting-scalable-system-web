@@ -12,11 +12,12 @@ import IconButton from "@mui/material/IconButton";
 import VideocamIcon from '@mui/icons-material/Videocam';
 
 interface AdminCourseListProps {
-  listData: any[]
+  listData: any[];
+  commodityId?: string;
 }
 
 const columnConfig = (payloads: any): TableColumnsType<any> => {
-  const {} = payloads;
+  const {commodityId} = payloads;
 
   return [
     {
@@ -28,7 +29,7 @@ const columnConfig = (payloads: any): TableColumnsType<any> => {
       dataIndex: 'course_name',
       title: 'Course Name',
       render: (text, record) => (
-        <a href={'/course/' + _.get(record, 'course_id')}>
+        <a href={`/course/${commodityId}/` + _.get(record, 'course_id')}>
           {text}
         </a>
       ),
@@ -57,9 +58,9 @@ const columnConfig = (payloads: any): TableColumnsType<any> => {
 
 
 const AdminCourseList: React.FC<AdminCourseListProps> = (props) => {
-  const {listData} = props;
+  const {listData, commodityId} = props;
 
-  const payloads = {};
+  const payloads = {commodityId};
   return (
     <Card>
       <CardContent>
