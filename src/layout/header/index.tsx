@@ -148,7 +148,9 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',
+                cursor: 'pointer',
               }}
+              onClick={() => navigate('/')}
             />
           </Box>
 
@@ -198,7 +200,9 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
                   backgroundSize: 'cover',
                   backgroundRepeat: 'no-repeat',
                   backgroundPosition: 'center',
+                  cursor: 'pointer',
                 }}
+                onClick={() => navigate('/')}
               />
             </Box>
             <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
