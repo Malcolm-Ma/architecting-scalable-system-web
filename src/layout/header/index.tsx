@@ -22,6 +22,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import {useKeycloak} from '@react-keycloak/web'
 import _ from "lodash";
 import {Badge, Divider, Stack, useTheme} from "@mui/material";
@@ -57,6 +59,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [alertOpen, setAlertOpen] = React.useState(false);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -89,6 +92,14 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
     setDialogOpen(true);
   };
 
+  const handleCloseAlert = () => {
+    setAlertOpen(false);
+  };
+
+  const openAlert = () => {
+    setAlertOpen(true);
+  };
+
   const assignMerchantRole = async () => {
     if(keycloak.authenticated) {
       actions.getMerchantRole()
@@ -99,6 +110,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
           actions.assignMerchantRoleToUser(keycloak.tokenParsed!.sub!, reqBody)
             .then(() => {
               setDialogOpen(false);
+              openAlert();
             })
             .catch((assignRoleError) => {
               console.log(assignRoleError.message);
@@ -258,7 +270,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
                   variant="outlined"
                   onClick={() => keycloak.register()}
                   color="secondary"
-                >Sign up</Button>
+                >Signup</Button>
               </Stack>
             }
           </Box>
@@ -276,8 +288,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Let Google help apps determine location. This means sending anonymous
-              location data to Google, even when no apps are running.
+              Merchant could upload video.
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -289,6 +300,13 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
             </Button>
           </DialogActions>
         </Dialog>
+      </Box>
+      <Box>
+        <Snackbar open={alertOpen} autoHideDuration={3500} onClose={handleCloseAlert}>
+          <Alert onClose={handleCloseAlert} severity="info" sx={{ width: '100%' }}>
+            Assign Merchant Role Successfully !
+          </Alert>
+        </Snackbar>
       </Box>
     </AppBar>
   );
