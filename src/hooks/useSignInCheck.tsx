@@ -58,5 +58,6 @@ export default function useSignInCheck(props: useSignInCheckProps) {
   return {
     isPurchased,
     LoginCheck,
+    ...user,
   };
 }

@@ -80,6 +80,8 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
       handleClickOpenDialog();
     } else if (setting === SETTINGS.dashboard) {
       window.open('/teacher/module/list');
+    } else if (setting === SETTINGS.account) {
+      navigate('/user');
     }
     setAnchorElUser(null);
   };

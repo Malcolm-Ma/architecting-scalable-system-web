@@ -24,7 +24,7 @@ const AdminCourse: React.FC = () => {
   const [moduleList, setModuleList] = useState<any[]>([]);
   const [selectedModule, setSelectedModule] = useState<object | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [initialId] = useState<string | null>(searchParams.get('module_id'));
+  const [initialId, setInitialId] = useState<string | null>(searchParams.get('module_id'));
 
   const [noCourse, setNoCourse] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -38,8 +38,10 @@ const AdminCourse: React.FC = () => {
         userId: _.get(userInfo, 'user_id'),
       });
       const filteredRes = _.filter(res, (i) => _.isObject(i));
+      setNoCourse(true);
       setModuleList(filteredRes);
     } catch (e: any) {
+      setNoCourse(true);
       console.error(e);
       setModuleList([]);
     } finally {
@@ -60,24 +62,25 @@ const AdminCourse: React.FC = () => {
   }, [getPublishedCommodityList, userInfo]);
 
   useEffect(() => {
+    console.log('--initialId--\n', initialId);
     if (moduleList.length >= 1) {
       if (_.isNil(initialId)) {
         // set the first module as default selection
         setSelectedModule(moduleList[0]);
         setSearchParams({module_id: _.get(moduleList, '0.commodity_id', '')});
         setSelectedId(_.get(moduleList, '0.commodity_id', null));
-      } else {
-        const filteredModule = _.find(moduleList, ['commodity_id', initialId]);
-        setSelectedModule(filteredModule);
-        setSelectedId(initialId);
+        setInitialId('');
       }
     }
   }, [initialId, moduleList, setSearchParams]);
 
   useEffect(() => {
-    console.log('--selectedModule--\n', selectedModule);
-    setNoCourse(false);
-  }, [selectedModule]);
+    if (!_.isEmpty(initialId)) {
+      const filteredModule = _.find(moduleList, ['commodity_id', initialId]);
+      setSelectedModule(filteredModule);
+      setSelectedId(initialId);
+    }
+  }, [initialId, moduleList]);
 
   return (
     <AuthCheck>
