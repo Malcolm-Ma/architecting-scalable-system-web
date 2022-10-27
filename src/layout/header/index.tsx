@@ -36,7 +36,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import {useCallback} from "react";
 import {message} from "antd";
-import Logo from 'src/assets/logo.jpg';
+import Logo from 'src/assets/logo-blue.png';
 
 // const pages = ['Products', 'Pricing', 'Blog'];
 const SETTINGS = {
